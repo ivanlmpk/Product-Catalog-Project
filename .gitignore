@@ -1,0 +1,31 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/
+
+# Auto-generated files
+.vscode/
+*.log
+*.tlog
+
+# Rider and VS Code folders
+.idea/
+.vscode/
+
+# Other
+*.DS_Store
+*.vs/
