@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product-Catalog", "Product-Catalog\Product-Catalog\Product-Catalog.csproj", "{2E61B10D-4E76-4C94-8575-0CAE7F5D0980}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product-Catalog", "Product-Catalog\Product-Catalog\Product-Catalog.csproj", "{2E61B10D-4E76-4C94-8575-0CAE7F5D0980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product-Catalog.Client", "Product-Catalog\Product-Catalog.Client\Product-Catalog.Client.csproj", "{CBDD659B-B434-42CC-B245-DA3BB58DCE80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product-Catalog.Client", "Product-Catalog\Product-Catalog.Client\Product-Catalog.Client.csproj", "{CBDD659B-B434-42CC-B245-DA3BB58DCE80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{51D69219-F438-46A9-946C-7BEE5FA40611}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CBDD659B-B434-42CC-B245-DA3BB58DCE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBDD659B-B434-42CC-B245-DA3BB58DCE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBDD659B-B434-42CC-B245-DA3BB58DCE80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D69219-F438-46A9-946C-7BEE5FA40611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D69219-F438-46A9-946C-7BEE5FA40611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D69219-F438-46A9-946C-7BEE5FA40611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D69219-F438-46A9-946C-7BEE5FA40611}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
