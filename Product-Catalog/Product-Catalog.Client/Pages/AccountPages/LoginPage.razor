@@ -1,0 +1,56 @@
+﻿@page "/account/login"
+@layout AuthenticationLayout
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2">
+            <EditForm Enhance Model="UserLogin" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+                <div class="card bg-dark" style="opacity:0.5; margin-top:50%; border-radius:10px; color:whitesmoke; font-weight:bold">
+                    <div class="card-header text-center fs-5 mb-2">Login</div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4"></div>    
+                            <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-center">
+                                <img style="border-radius:20px" src="" height="50" width="50"/>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mt-3">
+                            <label class="form-label">E-mail</label>
+                            <InputText @bind-Value="UserLogin.Email" class="form-control"></InputText>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" @bind="UserLogin.Senha" class="form-control"></input>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button class="btn btn-outline-primary float-end" type="submit">Login</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-center">
+                            Ainda não tem uma conta? | 
+                            <a class="btn-link" href="account/register">Cadastre-se</a>
+                        </span>
+                        <ValidationSummary/>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+        <div class="col-lg-5"></div>
+    </div>
+</div>
+
+@code {
+    public DTOs.LoginRequestDTO UserLogin = new DTOs.LoginRequestDTO();
+
+    private Task HandleLogin()
+    {
+        return Task.CompletedTask;
+    }
+}

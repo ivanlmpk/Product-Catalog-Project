@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product-Catalog", "Product-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product-Catalog.Client", "Product-Catalog\Product-Catalog.Client\Product-Catalog.Client.csproj", "{CBDD659B-B434-42CC-B245-DA3BB58DCE80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{51D69219-F438-46A9-946C-7BEE5FA40611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{51D69219-F438-46A9-946C-7BEE5FA40611}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
