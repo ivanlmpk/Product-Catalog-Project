@@ -15,4 +15,8 @@
     <PackageReference Include="MudBlazor" Version="7.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\background\" />
+  </ItemGroup>
+
 </Project>

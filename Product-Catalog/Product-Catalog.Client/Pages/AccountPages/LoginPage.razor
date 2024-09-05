@@ -1,56 +1,74 @@
 ﻿@page "/account/login"
+
+@using Product_Catalog.Client.Layout
 @layout AuthenticationLayout
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-5"></div>
-        <div class="col-lg-2">
+<MudContainer Class="d-flex justify-center align-center min-height-100vh main-content">
+    <MudCard Class="mud-elevation-12 card-login" Style="opacity: 0.3;">
+        <MudCardHeader>
+            <div class="text-center">
+                <MudText Typo="Typo.h5">Login</MudText>
+            </div>
+        </MudCardHeader>
+
+        <MudCardContent>
             <EditForm Enhance Model="UserLogin" OnValidSubmit="HandleLogin">
-                <DataAnnotationsValidator/>
-                <ValidationSummary/>
-                <div class="card bg-dark" style="opacity:0.5; margin-top:50%; border-radius:10px; color:whitesmoke; font-weight:bold">
-                    <div class="card-header text-center fs-5 mb-2">Login</div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4"></div>    
-                            <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-center">
-                                <img style="border-radius:20px" src="" height="50" width="50"/>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group mt-3">
-                            <label class="form-label">E-mail</label>
-                            <InputText @bind-Value="UserLogin.Email" class="form-control"></InputText>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label class="form-label">Senha</label>
-                            <input type="password" @bind="UserLogin.Senha" class="form-control"></input>
-                        </div>
-                        <div class="form-group mt-3">
-                            <button class="btn btn-outline-primary float-end" type="submit">Login</button>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="text-center">
-                            Ainda não tem uma conta? | 
-                            <a class="btn-link" href="account/register">Cadastre-se</a>
-                        </span>
-                        <ValidationSummary/>
-                    </div>
-                </div>
+                <DataAnnotationsValidator />
+                <MudTextField @bind-Value="UserLogin.Email" Label="Email" Required="true" />
+                <MudTextField InputType="InputType.Password" @bind-Value="UserLogin.Senha" Label="Senha" Required="true" />
+
+                <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" FullWidth="true">Login</MudButton>
             </EditForm>
-        </div>
-        <div class="col-lg-5"></div>
-    </div>
-</div>
+        </MudCardContent>
+
+        <MudCardActions Class="justify-center">
+            <MudText Typo="Typo.caption" Class="text-center">
+                Ainda não tem uma conta?
+                <MudLink Href="/account/register" Class="ml-2">Cadastre-se</MudLink>
+            </MudText>
+        </MudCardActions>
+    </MudCard>
+</MudContainer>
+
+<style>
+    .main-content {
+        display: flex;
+        justify-content: center;
+    }
+
+    .mud-paper {
+        margin-top: 15em;
+    }
+
+    * {
+        color: white !important;
+    }
+
+    .card-login {
+        background-color: black;
+    }
+
+    .card-login label {
+        color: white !important;
+    }
+
+</style>
 
 @code {
     public DTOs.LoginRequestDTO UserLogin = new DTOs.LoginRequestDTO();
 
-    private Task HandleLogin()
+    private async Task HandleLogin()
     {
-        return Task.CompletedTask;
+        // var result = await accountService.Login(UserLogin);
+
+        // if (result.Flag)
+        // {
+        //     var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+        //     await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
+        //     {
+        //         Token = result.Token, RefreshToken = result.RefreshToken
+        //     });
+        //     NavManager.NavigateTo("/", forceLoad: true);
+        // }
     }
 }
