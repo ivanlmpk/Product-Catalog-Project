@@ -13,6 +13,6 @@ public class ApplicationUser
     [StringLength(50)]
     public required string Email { get; set; }
     [Required]
-    [StringLength(50)]
+    [StringLength(100)]
     public required string Senha { get; set; }
 }
