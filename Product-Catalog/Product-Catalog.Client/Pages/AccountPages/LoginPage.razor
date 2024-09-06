@@ -1,14 +1,12 @@
 ﻿@page "/account/login"
 
 @using Product_Catalog.Client.Layout
-@layout AuthenticationLayout
+@layout AuthenticationLayout 
 
 <MudContainer Class="d-flex justify-center align-center min-height-100vh main-content">
-    <MudCard Class="mud-elevation-12 card-login" Style="opacity: 0.3;">
-        <MudCardHeader>
-            <div class="text-center">
-                <MudText Typo="Typo.h5">Login</MudText>
-            </div>
+    <MudCard Class="mud-elevation-12 card-login" Style="background-color: rgba(1, 1, 1, 0.8);">
+        <MudCardHeader Class="d-flex justify-center">
+            <MudText Typo="Typo.h5">Login</MudText>
         </MudCardHeader>
 
         <MudCardContent>
@@ -28,6 +26,7 @@
             </MudText>
         </MudCardActions>
     </MudCard>
+
 </MudContainer>
 
 <style>
@@ -38,9 +37,14 @@
 
     .mud-paper {
         margin-top: 15em;
+        min-width: 350px;
+        border-radius: 10px;
     }
 
-    * {
+    .mud-card-content {
+        padding: 25px !important;
+    }
+    /* * {
         color: white !important;
     }
 
@@ -50,7 +54,7 @@
 
     .card-login label {
         color: white !important;
-    }
+    } */
 
 </style>
 
