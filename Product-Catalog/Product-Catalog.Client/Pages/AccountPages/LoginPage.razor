@@ -1,4 +1,4 @@
-﻿@page "/account/login"
+﻿@page "/"
 
 @using Product_Catalog.Client.Layout
 @layout AuthenticationLayout 
@@ -44,18 +44,6 @@
     .mud-card-content {
         padding: 25px !important;
     }
-    /* * {
-        color: white !important;
-    }
-
-    .card-login {
-        background-color: black;
-    }
-
-    .card-login label {
-        color: white !important;
-    } */
-
 </style>
 
 @code {
@@ -63,16 +51,16 @@
 
     private async Task HandleLogin()
     {
-        // var result = await accountService.Login(UserLogin);
+        var result = await accountService.Login(UserLogin);
 
-        // if (result.Flag)
-        // {
-        //     var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
-        //     await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
-        //     {
-        //         Token = result.Token, RefreshToken = result.RefreshToken
-        //     });
-        //     NavManager.NavigateTo("/", forceLoad: true);
-        // }
+        if (result.Flag)
+        {
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+            await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
+            {
+                Token = result.Token, RefreshToken = result.RefreshToken
+            });
+            NavManager.NavigateTo("/", forceLoad: true);
+        }
     }
 }

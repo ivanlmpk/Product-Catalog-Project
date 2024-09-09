@@ -1,5 +1,4 @@
 using MudBlazor.Services;
-using Product_Catalog.Client.Pages;
 using Product_Catalog.Components;
 
 var builder = WebApplication.CreateBuilder(args);
