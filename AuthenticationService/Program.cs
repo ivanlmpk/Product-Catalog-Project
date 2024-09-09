@@ -1,4 +1,6 @@
+using AuthenticationService.Application.Interfaces;
 using AuthenticationService.Infrastructure.Data;
+using AuthenticationService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Database") ??
         throw new InvalidOperationException("Erro: Sua conexão não foi encontrada!"));
 });
+
+builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
     
 var app = builder.Build();
 
