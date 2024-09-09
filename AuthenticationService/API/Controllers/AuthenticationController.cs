@@ -8,22 +8,28 @@ namespace AuthenticationService.API.Controllers;
 [Route("api/[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IUserAccount _userAccountRepository;
+    private readonly IUserAccount _accountInterface;
 
-    public AuthenticationController(IUserAccount userAccountRepository)
+    public AuthenticationController(IUserAccount userAccountInterface)
     {
-        _userAccountRepository = userAccountRepository;
+        _accountInterface = userAccountInterface;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(Register userRegister)
     {
-        return await _userAccountRepository.Register(userRegister);
+        if (userRegister == null) return BadRequest("O modelo está vazio.");
+        var result = await _accountInterface.Register(userRegister);
+
+        return Ok(result);
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(Login userLogin)
     {
-        return await _userAccountRepository.Login(userLogin);
+        if (userLogin == null) return BadRequest("O modelo está vazio.");
+        var result = await _accountInterface.Login(userLogin);
+
+        return Ok(result);
     }
 }

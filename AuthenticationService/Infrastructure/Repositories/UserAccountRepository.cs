@@ -5,16 +5,18 @@ using AuthenticationService.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Options;
+using AuthenticationService.Helpers;
+using AuthenticationService.Domain.Responses;
 
 namespace AuthenticationService.Infrastructure.Repositories;
 
 public class UserAccountRepository : IUserAccount
 {
     private readonly AuthDbContext _context;
-    private readonly IConfiguration _config;
+    private readonly IOptions<JwtSection> _config;
 
-    public UserAccountRepository(AuthDbContext context, IConfiguration config)
+    public UserAccountRepository(AuthDbContext context, IOptions<JwtSection> config)
     {
         _context = context;
         _config = config;
@@ -42,7 +44,7 @@ public class UserAccountRepository : IUserAccount
         _context.UserRoles.Add(new UserRole()
         {
             ApplicationUserId = entity.Id,
-            Role = "Usuário padrão"
+            Role = RoleType.StandardUser
         });
 
         await _context.SaveChangesAsync();
@@ -50,28 +52,26 @@ public class UserAccountRepository : IUserAccount
         return new OkObjectResult("Usuário cadastrado com sucesso!");
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(Login userLogin)
+    public async Task<LoginResponse> Login(Login userLogin)
     {
         if (string.IsNullOrWhiteSpace(userLogin.Email) || string.IsNullOrWhiteSpace(userLogin.Senha))
-            return new BadRequestObjectResult("O campo de e-mail ou senha está vazio.");
+            return new LoginResponse(false, "O campo de e-mail ou senha está vazio.");
 
-        var getUserLogin = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == userLogin.Email);
+        var applicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == userLogin.Email);
 
-        if (getUserLogin == null)
-            return new NotFoundObjectResult("Não foi encontrado um usuário para esse e-mail e senha.");
+        if (applicationUser == null)
+            return new LoginResponse(false, "Não foi encontrado um usuário para esse e-mail e senha.");
 
-        var verifyPassword = BCrypt.Net.BCrypt.Verify(userLogin.Senha, getUserLogin.Senha);
+        var verifyPassword = BCrypt.Net.BCrypt.Verify(userLogin.Senha, applicationUser.Senha);
 
         if (!verifyPassword)
-            return new NotFoundObjectResult("Senha inválida.");
+            return new LoginResponse(false, "Senha inválida.");
 
-        var getRole = await _context.UserRoles.FirstOrDefaultAsync(r => r.ApplicationUserId == getUserLogin.Id);
+        var getRole = await _context.UserRoles.FirstOrDefaultAsync(r => r.ApplicationUserId == applicationUser.Id);
 
-        string key = $"{_config["Authentication:Key"]}.{getUserLogin.Nome}.{getUserLogin.Id}";
+        string jwtToken = GenerateToken(applicationUser, getRole!.Role!);
+        string refreshToken = GenerateRefreshToken();
 
-        string accessToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(key));
-
-        return new OkObjectResult($"Token de acesso: {accessToken}");
+        return new LoginResponse(true, "Login feito com sucesso", jwtToken, refreshToken);
     }
 }

@@ -51,16 +51,16 @@
 
     private async Task HandleLogin()
     {
-        var result = await accountService.Login(UserLogin);
+        // var result = await accountService.Login(UserLogin);
 
-        if (result.Flag)
-        {
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
-            await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
-            {
-                Token = result.Token, RefreshToken = result.RefreshToken
-            });
-            NavManager.NavigateTo("/", forceLoad: true);
-        }
+        // if (result.Flag)
+        // {
+        //     var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+        //     await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
+        //     {
+        //         Token = result.Token, RefreshToken = result.RefreshToken
+        //     });
+        //     NavManager.NavigateTo("/", forceLoad: true);
+        // }
     }
 }
