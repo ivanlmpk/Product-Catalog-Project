@@ -7,6 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using AuthenticationService.Helpers;
 using AuthenticationService.Domain.Responses;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace AuthenticationService.Infrastructure.Repositories;
 
@@ -68,21 +73,36 @@ public class UserAccountRepository : IUserAccount
 
         var getRole = await _context.UserRoles.FirstOrDefaultAsync(r => r.ApplicationUserId == applicationUser.Id);
 
-        string jwtToken = GenerateToken(applicationUser, getRole!.Role!);
+        string jwtToken = GenerateToken(applicationUser, getRole!.Role);
         string refreshToken = GenerateRefreshToken();
 
         return new LoginResponse(true, "Login feito com sucesso", jwtToken, refreshToken);
     }
 
-    public async Task<IActionResult> GenerateToken(ApplicationUser applicationUser, UserRole role)
+    public string GenerateToken(ApplicationUser user, RoleType role)
     {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Value.Key));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        var userClaims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.Nome),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, role.ToString())
+        };
 
+        var token = new JwtSecurityToken(
+            issuer: _config.Value.Issuer,
+            audience: _config.Value.Audience,
+            claims: userClaims,
+            expires: DateTime.Now.AddDays(1),
+            signingCredentials: credentials
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public async Task<IActionResult> GenerateRefreshToken()
-    {
-
-    }
+    public string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
     private async Task<T> AddToDatabase<T>(T model)
     {
