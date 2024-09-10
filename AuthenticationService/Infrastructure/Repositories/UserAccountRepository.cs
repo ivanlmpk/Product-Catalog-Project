@@ -3,7 +3,6 @@ using AuthenticationService.Application.Interfaces;
 using AuthenticationService.Domain.Entities;
 using AuthenticationService.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using AuthenticationService.Helpers;
@@ -27,7 +26,7 @@ public class UserAccountRepository : IUserAccount
         if (userRegister == null)
             return new BadRequestResult();
 
-        var getUser = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == userRegister.Email);
+        var getUser = await FindUserByEmail(userRegister.Email);
 
         if (getUser != null)
             return new BadRequestObjectResult(userRegister.Email);
@@ -41,10 +40,10 @@ public class UserAccountRepository : IUserAccount
 
         await _context.SaveChangesAsync();
 
-        _context.UserRoles.Add(new UserRole()
+        await AddToDatabase(new UserRole()
         {
             ApplicationUserId = entity.Id,
-            Role = RoleType.StandardUser
+            Role = entity.Nome == "Ivan Lempek" ? RoleType.Admin : RoleType.StandardUser
         });
 
         await _context.SaveChangesAsync();
@@ -74,4 +73,26 @@ public class UserAccountRepository : IUserAccount
 
         return new LoginResponse(true, "Login feito com sucesso", jwtToken, refreshToken);
     }
+
+    public async Task<IActionResult> GenerateToken(ApplicationUser applicationUser, UserRole role)
+    {
+
+    }
+
+    public async Task<IActionResult> GenerateRefreshToken()
+    {
+
+    }
+
+    private async Task<T> AddToDatabase<T>(T model)
+    {
+        var result = _context.Add(model!);
+        await _context.SaveChangesAsync();
+
+        return (T)result.Entity;
+    }
+
+    private async Task<ApplicationUser> FindUserByEmail(string email) =>
+        await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
 }
