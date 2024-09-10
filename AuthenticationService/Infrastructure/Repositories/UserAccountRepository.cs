@@ -79,7 +79,7 @@ public class UserAccountRepository : IUserAccount
         return new LoginResponse(true, "Login feito com sucesso", jwtToken, refreshToken);
     }
 
-    public string GenerateToken(ApplicationUser user, RoleType role)
+    private string GenerateToken(ApplicationUser user, RoleType role)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Value.Key!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -102,7 +102,7 @@ public class UserAccountRepository : IUserAccount
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+    private string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
     private async Task<T> AddToDatabase<T>(T model)
     {
@@ -111,7 +111,6 @@ public class UserAccountRepository : IUserAccount
 
         return (T)result.Entity;
     }
-
 
     private async Task<ApplicationUser> FindUserByEmail(string email) =>
         await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower()! == email.ToLower()!);
