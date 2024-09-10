@@ -61,7 +61,7 @@ public class UserAccountRepository : IUserAccount
         if (string.IsNullOrWhiteSpace(userLogin.Email) || string.IsNullOrWhiteSpace(userLogin.Senha))
             return new LoginResponse(false, "O campo de e-mail ou senha está vazio.");
 
-        var applicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == userLogin.Email);
+        var applicationUser = await FindUserByEmail(userLogin.Email);
 
         if (applicationUser == null)
             return new LoginResponse(false, "Não foi encontrado um usuário para esse e-mail e senha.");
@@ -81,7 +81,7 @@ public class UserAccountRepository : IUserAccount
 
     public string GenerateToken(ApplicationUser user, RoleType role)
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Value.Key));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Value.Key!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         var userClaims = new[]
         {
@@ -112,7 +112,8 @@ public class UserAccountRepository : IUserAccount
         return (T)result.Entity;
     }
 
+
     private async Task<ApplicationUser> FindUserByEmail(string email) =>
-        await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+        await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower()! == email.ToLower()!);
 
 }
