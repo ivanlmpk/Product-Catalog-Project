@@ -47,6 +47,7 @@ public class UserAccountRepository : IUserAccount
 
         await AddToDatabase(new UserRole()
         {
+            ApplicationUser = entity,
             ApplicationUserId = entity.Id,
             Role = entity.Nome == "Ivan Lempek" ? RoleType.Admin : RoleType.StandardUser
         });

@@ -12,6 +12,8 @@ public class UserRole
     public int ApplicationUserId { get; set; }
 
     public RoleType Role { get; set; }
+
+    public required ApplicationUser ApplicationUser { get; set; }
 }
 
 public enum RoleType
