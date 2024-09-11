@@ -7,6 +7,7 @@ public class AuthDbContext(DbContextOptions<AuthDbContext> options) : DbContext(
 {
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<RefreshTokenInfo> RefreshTokenInfos { get; set; }
 }
 
     

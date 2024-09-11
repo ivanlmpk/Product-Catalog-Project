@@ -105,6 +105,9 @@ public class UserAccountRepository : IUserAccount
 
     private string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
+    private async Task<ApplicationUser> FindUserByEmail(string email) =>
+        await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower()! == email.ToLower()!);
+
     private async Task<T> AddToDatabase<T>(T model)
     {
         var result = _context.Add(model!);
@@ -113,7 +116,8 @@ public class UserAccountRepository : IUserAccount
         return (T)result.Entity;
     }
 
-    private async Task<ApplicationUser> FindUserByEmail(string email) =>
-        await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower()! == email.ToLower()!);
+    public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
+    {
 
+    } 
 }
