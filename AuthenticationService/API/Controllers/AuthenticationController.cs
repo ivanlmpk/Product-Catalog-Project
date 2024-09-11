@@ -35,7 +35,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("refresh-token")]
-    public async Task<IActionResult> RefreshTokenAsync(RefreshTokenInfo token)
+    public async Task<IActionResult> RefreshTokenAsync(RefreshToken token)
     {
         if (token == null) return BadRequest("O token está vazio");
         var result = await _accountInterface.RefreshTokenAsync(token);

@@ -11,5 +11,5 @@ public interface IUserAccount
 
     Task<LoginResponse> Login(Login userLogin);
 
-    Task<LoginResponse> RefreshTokenAsync(RefreshTokenInfo token);
+    Task<LoginResponse> RefreshTokenAsync(RefreshToken token);
 }

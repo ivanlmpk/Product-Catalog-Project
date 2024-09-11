@@ -77,6 +77,22 @@ public class UserAccountRepository : IUserAccount
         string jwtToken = GenerateToken(applicationUser, getRole!.Role);
         string refreshToken = GenerateRefreshToken();
 
+        var refreshTokenByUser = await _context.RefreshTokenInfos.FirstOrDefaultAsync(t => t.UserId == applicationUser.Id);
+
+        if (refreshTokenByUser == null)
+        {
+            await AddToDatabase(new RefreshTokenInfo
+            {
+                Token = refreshToken,
+                UserId = applicationUser.Id
+            });
+        } 
+        else
+        {
+            refreshTokenByUser.Token = refreshToken;
+            await _context.SaveChangesAsync();
+        }
+
         return new LoginResponse(true, "Login feito com sucesso", jwtToken, refreshToken);
     }
 
@@ -116,7 +132,7 @@ public class UserAccountRepository : IUserAccount
         return (T)result.Entity;
     }
 
-    public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenInfo token)
+    public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
     {
         if (token == null) 
             return new LoginResponse(false, "O token está vazio");
