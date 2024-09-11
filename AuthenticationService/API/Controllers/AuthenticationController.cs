@@ -1,5 +1,6 @@
 ﻿using AuthenticationService.Application.DTOs;
 using AuthenticationService.Application.Interfaces;
+using AuthenticationService.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.API.Controllers;
@@ -29,6 +30,15 @@ public class AuthenticationController : ControllerBase
     {
         if (userLogin == null) return BadRequest("O modelo está vazio.");
         var result = await _accountInterface.Login(userLogin);
+
+        return Ok(result);
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshTokenAsync(RefreshTokenInfo token)
+    {
+        if (token == null) return BadRequest("O token está vazio");
+        var result = await _accountInterface.RefreshTokenAsync(token);
 
         return Ok(result);
     }

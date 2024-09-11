@@ -116,8 +116,31 @@ public class UserAccountRepository : IUserAccount
         return (T)result.Entity;
     }
 
-    public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
+    public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenInfo token)
     {
+        if (token == null) 
+            return new LoginResponse(false, "O token está vazio");
 
+        var findToken = await _context.RefreshTokenInfos.FirstOrDefaultAsync(t => t.Token == token.Token);
+        if (findToken == null)
+            return new LoginResponse(false, "O refresh token é obrigatório");
+
+        var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == findToken.UserId);
+        if (user == null)
+            return new LoginResponse(false, "O refresh token não pode ser gerado pois o usuário não existe");
+
+        var userRole = await _context.UserRoles.FirstOrDefaultAsync(r => r.ApplicationUserId == user.Id);
+
+        string jwtToken = GenerateToken(user, userRole!.Role);
+        string refreshToken = GenerateRefreshToken();
+
+        var updateRefreshToken = await _context.RefreshTokenInfos.FirstOrDefaultAsync(t => t.UserId == user.Id);
+        if (updateRefreshToken == null)
+            return new LoginResponse(false, "O refresh token não pode ser gerado pois o usuário não está logado");
+
+        updateRefreshToken.Token = refreshToken;
+        await _context.SaveChangesAsync();
+
+        return new LoginResponse(true, "O Token foi atualizado com sucesso", jwtToken, refreshToken);
     } 
 }
