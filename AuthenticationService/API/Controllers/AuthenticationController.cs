@@ -1,6 +1,5 @@
-﻿using AuthenticationService.Application.DTOs;
+﻿using _1_BaseDTOs;
 using AuthenticationService.Application.Interfaces;
-using AuthenticationService.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.API.Controllers;

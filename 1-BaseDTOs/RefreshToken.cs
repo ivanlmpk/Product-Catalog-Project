@@ -1,4 +1,4 @@
-﻿namespace AuthenticationService.Application.DTOs;
+﻿namespace _1_BaseDTOs;
 
 public class RefreshToken
 {

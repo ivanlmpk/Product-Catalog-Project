@@ -19,11 +19,16 @@
 
   <ItemGroup>
     <Folder Include="API\Models\" />
+    <Folder Include="Application\DTOs\" />
     <Folder Include="Application\Interfaces\" />
     <Folder Include="Domain\Services\" />
     <Folder Include="Domain\Repositories\" />
     <Folder Include="Infrastructure\Migrations\" />
     <Folder Include="Infrastructure\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\1-BaseDTOs\1-BaseDTOs.csproj" />
   </ItemGroup>
 
 </Project>

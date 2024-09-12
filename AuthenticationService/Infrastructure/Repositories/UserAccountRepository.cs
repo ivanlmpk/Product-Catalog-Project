@@ -1,4 +1,4 @@
-﻿using AuthenticationService.Application.DTOs;
+﻿using _1_BaseDTOs;
 using AuthenticationService.Application.Interfaces;
 using AuthenticationService.Domain.Entities;
 using AuthenticationService.Infrastructure.Data;
@@ -139,7 +139,7 @@ public class UserAccountRepository : IUserAccount
 
         var findToken = await _context.RefreshTokenInfos.FirstOrDefaultAsync(t => t.Token == token.Token);
         if (findToken == null)
-            return new LoginResponse(false, "O refresh token é obrigatório");
+            return new LoginResponse(false, "Refresh token inválido");
 
         var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == findToken.UserId);
         if (user == null)

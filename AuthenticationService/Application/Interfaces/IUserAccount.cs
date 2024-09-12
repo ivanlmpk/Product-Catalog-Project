@@ -1,5 +1,4 @@
-﻿using AuthenticationService.Application.DTOs;
-using AuthenticationService.Domain.Entities;
+﻿using _1_BaseDTOs;
 using AuthenticationService.Domain.Responses;
 using Microsoft.AspNetCore.Mvc;
 

@@ -11,12 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.*" />
+	<PackageReference Include="Microsoft.Extensions.Http" Version="8.*" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.*" />
     <PackageReference Include="MudBlazor" Version="7.*" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\images\background\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\1-BaseDTOs\1-BaseDTOs.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,44 @@
+﻿@page "/cadastro"
+
+@using Product_Catalog.Client.DTOs
+@using Product_Catalog.Client.Layout
+@using _1_BaseDTOs
+@layout AuthenticationLayout
+
+<MudContainer Class="d-flex justify-center align-center min-height-100vh main-content">
+    <MudCard Class="mud-elevation-12 card-login" Style="background-color: rgba(1, 1, 1, 0.8);">
+        <MudCardHeader Class="d-flex justify-center">
+            <MudText Typo="Typo.h5">Login</MudText>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <EditForm Enhance Model="User" OnValidSubmit="HandleRegister">
+                <DataAnnotationsValidator />
+                <MudTextField @bind-Value="User.NomeCompleto" Label="Nome completo" Required="true" />
+                <MudTextField InputType="InputType.Email" @bind-Value="User.Email" Label="E-mail" Required="true" />
+                <MudTextField InputType="InputType.Telephone" @bind-Value="User.Telefone" Label="Telefone" Required="true" />
+                <MudTextField @bind-Value="User.Cidade" Label="Cidade" Required="false" />
+ 
+                <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Secondary" Class="mt-4" FullWidth="true">Cadastrar</MudButton>
+            </EditForm>
+        </MudCardContent>
+
+        <MudCardActions Class="justify-center">
+            <MudText Typo="Typo.caption" Class="text-center">
+               Já tem uma conta?
+                <MudLink Href="/" Class="ml-2">Faça o login</MudLink>
+            </MudText>
+        </MudCardActions>
+    </MudCard>
+
+</MudContainer>
+
+@code {
+    Register User = new Register();
+
+    private Task HandleRegister()
+    {
+        // var result = await authenticationService.
+        return Task.CompletedTask;
+    }
+}
