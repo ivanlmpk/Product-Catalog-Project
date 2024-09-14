@@ -23,7 +23,6 @@
     <Folder Include="Application\Interfaces\" />
     <Folder Include="Domain\Services\" />
     <Folder Include="Domain\Repositories\" />
-    <Folder Include="Infrastructure\Migrations\" />
     <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 

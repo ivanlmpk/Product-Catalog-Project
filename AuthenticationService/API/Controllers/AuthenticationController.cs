@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuthenticationService.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class AuthenticationController : ControllerBase
 {
     private readonly IUserAccount _accountInterface;
@@ -18,7 +18,7 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(Register userRegister)
     {
-        if (userRegister == null) return BadRequest("O modelo está vazio.");
+        if (userRegister == null) return BadRequest("Preencha os dados para efetuar o registro.");
         var result = await _accountInterface.Register(userRegister);
 
         return Ok(result);
@@ -27,7 +27,7 @@ public class AuthenticationController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(Login userLogin)
     {
-        if (userLogin == null) return BadRequest("O modelo está vazio.");
+        if (userLogin == null) return BadRequest("Preencha os campos para efetuar o login.");
         var result = await _accountInterface.Login(userLogin);
 
         return Ok(result);
