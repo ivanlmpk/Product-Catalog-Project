@@ -1,4 +1,4 @@
-using ExternalServices.Authentication;
+using ExternalServices.Services.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 

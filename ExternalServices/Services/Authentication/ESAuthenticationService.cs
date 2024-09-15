@@ -4,7 +4,7 @@ using _1_BaseDTOs.Token;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
 
-namespace ExternalServices.Authentication;
+namespace ExternalServices.Services.Authentication;
 
 public class ESAuthenticationService : IESAuthenticationService
 {

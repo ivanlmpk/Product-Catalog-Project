@@ -1,5 +1,5 @@
 ﻿using _1_BaseDTOs.Login;
-using ExternalServices.Authentication;
+using ExternalServices.Services.Authentication;
 using Microsoft.AspNetCore.Components;
 
 namespace Product_Catalog.Client.Pages.AccountPages

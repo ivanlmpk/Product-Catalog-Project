@@ -2,7 +2,7 @@
 using _1_BaseDTOs.Responses;
 using _1_BaseDTOs.Token;
 
-namespace ExternalServices.Authentication;
+namespace ExternalServices.Services.Authentication;
 
 public interface IESAuthenticationService
 {
