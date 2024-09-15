@@ -13,6 +13,7 @@
   <ItemGroup>
 	<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
 	<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.*" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.38" />
 	<PackageReference Include="Microsoft.Extensions.Http" Version="8.*" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.*" />
     <PackageReference Include="MudBlazor" Version="7.*" />
@@ -24,7 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\1-BaseDTOs\1-BaseDTOs.csproj" />
-    <ProjectReference Include="..\..\2-ExternalServices\2-ExternalServices.csproj" />
+    <ProjectReference Include="..\..\ExternalServices\ExternalServices.csproj" />
   </ItemGroup>
 
 </Project>

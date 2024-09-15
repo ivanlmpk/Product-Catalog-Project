@@ -27,15 +27,15 @@ public class UserAccountRepository : IUserAccount
         _config = config;
     }
 
-    public async Task<IActionResult> Register(Register userRegister)
+    public async Task<GeneralResponse> Register(Register userRegister)
     {
         if (userRegister == null)
-            return new BadRequestResult();
+            return new GeneralResponse(false, "Preencha os campos de cadastro.");
 
         var getUser = await FindUserByEmail(userRegister.Email);
 
         if (getUser != null)
-            return new BadRequestObjectResult(userRegister.Email);
+            return new GeneralResponse(false, "Já existe um usuário com esse e-mail cadastrado no sistema.");
 
         var entity = _context.ApplicationUsers.Add(new ApplicationUser()
         {
@@ -55,7 +55,7 @@ public class UserAccountRepository : IUserAccount
 
         await _context.SaveChangesAsync();
 
-        return new OkObjectResult("Usuário cadastrado com sucesso!");
+        return new GeneralResponse(true, "Usuário cadastrado com sucesso!");
     }
 
     public async Task<LoginResponse> Login(Login userLogin)

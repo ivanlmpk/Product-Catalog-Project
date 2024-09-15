@@ -7,7 +7,7 @@ namespace AuthenticationService.Application.Interfaces;
 
 public interface IUserAccount
 {
-    Task<IActionResult> Register(Register userRegister);
+    Task<GeneralResponse> Register(Register userRegister);
 
     Task<LoginResponse> Login(Login userLogin);
 

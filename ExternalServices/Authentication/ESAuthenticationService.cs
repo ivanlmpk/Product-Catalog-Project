@@ -1,11 +1,10 @@
 ﻿using _1_BaseDTOs.Login;
 using _1_BaseDTOs.Responses;
 using _1_BaseDTOs.Token;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
 
-namespace _2_ExternalServices.Authentication;
+namespace ExternalServices.Authentication;
 
 public class ESAuthenticationService : IESAuthenticationService
 {
@@ -33,7 +32,7 @@ public class ESAuthenticationService : IESAuthenticationService
         throw new NotImplementedException();
     }
 
-    public Task<IActionResult> Register(Register userRegister)
+    public Task<GeneralResponse> Register(Register userRegister)
     {
         throw new NotImplementedException();
     }

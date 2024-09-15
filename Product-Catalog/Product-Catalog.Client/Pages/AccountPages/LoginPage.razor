@@ -1,7 +1,7 @@
 ﻿@page "/"
 
 @using Product_Catalog.Client.Layout
-@using _2_ExternalServices.Authentication
+@using ExternalServices.Authentication
 @layout AuthenticationLayout 
 
 <MudContainer Class="d-flex justify-center align-center min-height-100vh main-content">
@@ -11,7 +11,7 @@
         </MudCardHeader>
 
         <MudCardContent>
-            <EditForm Enhance Model="UserLogin" @onclick="HandleLogin">
+            <EditForm Enhance Model="UserLogin" OnSubmit="HandleLogin">
                 <DataAnnotationsValidator />
                 <MudTextField @bind-Value="UserLogin.Email" Label="Email" Required="true" />
                 <MudTextField InputType="InputType.Password" @bind-Value="UserLogin.Senha" Label="Senha" Required="true" />
