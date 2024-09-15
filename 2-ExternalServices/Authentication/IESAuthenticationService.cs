@@ -1,11 +1,11 @@
 ﻿using _1_BaseDTOs.Login;
-using _1_BaseDTOs.Token;
 using _1_BaseDTOs.Responses;
+using _1_BaseDTOs.Token;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthenticationService.Application.Interfaces;
+namespace _2_ExternalServices.Authentication;
 
-public interface IUserAccount
+internal interface IESAuthenticationService
 {
     Task<IActionResult> Register(Register userRegister);
 

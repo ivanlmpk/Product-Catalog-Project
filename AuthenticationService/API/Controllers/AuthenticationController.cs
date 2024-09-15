@@ -1,4 +1,5 @@
-﻿using _1_BaseDTOs;
+﻿using _1_BaseDTOs.Login;
+using _1_BaseDTOs.Token;
 using AuthenticationService.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

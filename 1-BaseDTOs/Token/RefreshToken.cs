@@ -1,4 +1,4 @@
-﻿namespace _1_BaseDTOs;
+﻿namespace _1_BaseDTOs.Token;
 
 public class RefreshToken
 {

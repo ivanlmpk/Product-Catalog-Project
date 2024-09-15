@@ -1,17 +1,18 @@
-﻿using _1_BaseDTOs;
-using AuthenticationService.Application.Interfaces;
+﻿using AuthenticationService.Application.Interfaces;
 using AuthenticationService.Domain.Entities;
 using AuthenticationService.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using AuthenticationService.Helpers;
-using AuthenticationService.Domain.Responses;
+using _1_BaseDTOs.Responses;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Security.Cryptography;
+using _1_BaseDTOs.Login;
+using _1_BaseDTOs.Token;
 
 namespace AuthenticationService.Infrastructure.Repositories;
 

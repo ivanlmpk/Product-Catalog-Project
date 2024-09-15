@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace _1_BaseDTOs;
+namespace _1_BaseDTOs.Login;
 
 public class AccountBase
 {
