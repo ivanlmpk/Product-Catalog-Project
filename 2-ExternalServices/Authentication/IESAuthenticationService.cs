@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _2_ExternalServices.Authentication;
 
-internal interface IESAuthenticationService
+public interface IESAuthenticationService
 {
     Task<IActionResult> Register(Register userRegister);
 

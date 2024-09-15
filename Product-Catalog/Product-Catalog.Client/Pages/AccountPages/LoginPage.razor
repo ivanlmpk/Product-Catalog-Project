@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using Product_Catalog.Client.Layout
+@using _2_ExternalServices.Authentication
 @layout AuthenticationLayout 
 
 <MudContainer Class="d-flex justify-center align-center min-height-100vh main-content">
@@ -10,7 +11,7 @@
         </MudCardHeader>
 
         <MudCardContent>
-            <EditForm Enhance Model="UserLogin" OnValidSubmit="HandleLogin">
+            <EditForm Enhance Model="UserLogin" @onclick="HandleLogin">
                 <DataAnnotationsValidator />
                 <MudTextField @bind-Value="UserLogin.Email" Label="Email" Required="true" />
                 <MudTextField InputType="InputType.Password" @bind-Value="UserLogin.Senha" Label="Senha" Required="true" />
@@ -46,21 +47,4 @@
     }
 </style>
 
-@code {
-    public DTOs.LoginRequestDTO UserLogin = new DTOs.LoginRequestDTO();
 
-    private async Task HandleLogin()
-    {
-        // var result = await accountService.Login(UserLogin);
-
-        // if (result.Flag)
-        // {
-        //     var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
-        //     await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
-        //     {
-        //         Token = result.Token, RefreshToken = result.RefreshToken
-        //     });
-        //     NavManager.NavigateTo("/", forceLoad: true);
-        // }
-    }
-}

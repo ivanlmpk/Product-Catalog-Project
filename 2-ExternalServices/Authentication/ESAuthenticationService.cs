@@ -11,6 +11,8 @@ public class ESAuthenticationService : IESAuthenticationService
 {
     private readonly HttpClient _httpClient;
     private readonly string _baseUrl;
+    private readonly string _ApiVersion = "v1";
+    private readonly string _controller = "Authentication";
 
     public ESAuthenticationService(HttpClient httpClient, IConfiguration configuration)
     {
@@ -20,7 +22,7 @@ public class ESAuthenticationService : IESAuthenticationService
 
     public async Task<LoginResponse> Login(Login userLogin)
     {
-        var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/v1/login", userLogin);
+        var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/{_ApiVersion}/{_controller}/login", userLogin);
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadFromJsonAsync<LoginResponse>();

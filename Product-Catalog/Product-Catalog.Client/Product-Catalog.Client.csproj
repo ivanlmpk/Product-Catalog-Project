@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\1-BaseDTOs\1-BaseDTOs.csproj" />
+    <ProjectReference Include="..\..\2-ExternalServices\2-ExternalServices.csproj" />
   </ItemGroup>
 
 </Project>
