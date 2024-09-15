@@ -7,13 +7,13 @@ namespace Product_Catalog.Client.Pages.AccountPages
     public partial class LoginPage
     {
         [Inject] protected NavigationManager NavigationManager { get; set; }
-        [Inject] protected IESAuthenticationService _authenticationService { get; set; }
+        [Inject] protected IESAuthenticationService AuthenticationService { get; set; }
 
         public Login UserLogin = new Login();
 
         private async Task HandleLogin()
         {
-            var result = await _authenticationService.Login(UserLogin);
+            var result = await AuthenticationService.Login(UserLogin);
 
             if (result.Flag)
             {

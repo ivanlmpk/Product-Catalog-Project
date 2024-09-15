@@ -8,10 +8,10 @@ namespace ExternalServices.Authentication;
 
 public class ESAuthenticationService : IESAuthenticationService
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _baseUrl;
-    private readonly string _ApiVersion = "v1";
-    private readonly string _controller = "Authentication";
+    public readonly HttpClient _httpClient;
+    public readonly string _baseUrl;
+    public readonly string _ApiVersion = "v1";
+    public readonly string _controller = "Authentication";
 
     public ESAuthenticationService(HttpClient httpClient, IConfiguration configuration)
     {

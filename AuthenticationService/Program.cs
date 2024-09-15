@@ -20,7 +20,18 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
 
 builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("Authentication"));
 builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
-    
+
+// Cors para aceitar todos dominios
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirTudo", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,17 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Cors para aceitar todos dominios
-builder.Services.AddCors(options => 
-{
-    options.AddPolicy("PermitirTudo", builder =>
-    {
-        builder.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
-    });
-});
+app.UseCors("PermitirTudo");
 
 app.UseHttpsRedirection();
 
