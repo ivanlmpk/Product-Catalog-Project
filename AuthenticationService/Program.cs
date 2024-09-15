@@ -30,6 +30,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Cors para aceitar todos dominios
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("PermitirTudo", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

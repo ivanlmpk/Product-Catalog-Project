@@ -11,19 +11,19 @@
         </MudCardHeader>
 
         <MudCardContent>
-            <EditForm Enhance Model="UserLogin" OnSubmit="HandleLogin">
+            <EditForm Enhance Model="UserLogin">
                 <DataAnnotationsValidator />
                 <MudTextField @bind-Value="UserLogin.Email" Label="Email" Required="true" />
                 <MudTextField InputType="InputType.Password" @bind-Value="UserLogin.Senha" Label="Senha" Required="true" />
 
-                <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" FullWidth="true">Login</MudButton>
+                <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" FullWidth="true" @onclick="HandleLogin">Login</MudButton>
             </EditForm>
         </MudCardContent>
 
         <MudCardActions Class="justify-center">
             <MudText Typo="Typo.caption" Class="text-center">
                 Ainda não tem uma conta?
-                <MudLink Href="/cadastro" Class="ml-2">Cadastre-se</MudLink>
+                <MudLink @onclick="NavToRegisterPage" Class="ml-2">Cadastre-se</MudLink>
             </MudText>
         </MudCardActions>
     </MudCard>

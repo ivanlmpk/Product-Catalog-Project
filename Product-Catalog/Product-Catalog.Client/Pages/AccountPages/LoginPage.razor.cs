@@ -7,14 +7,9 @@ namespace Product_Catalog.Client.Pages.AccountPages
     public partial class LoginPage
     {
         [Inject] protected NavigationManager NavigationManager { get; set; }
-        private readonly IESAuthenticationService _authenticationService;
-        public Login UserLogin = new Login();
+        [Inject] protected IESAuthenticationService _authenticationService { get; set; }
 
-        public LoginPage(NavigationManager navigationManager, IESAuthenticationService authenticationService)
-        {
-            NavigationManager = navigationManager;
-            _authenticationService = authenticationService;
-        }
+        public Login UserLogin = new Login();
 
         private async Task HandleLogin()
         {
@@ -30,6 +25,11 @@ namespace Product_Catalog.Client.Pages.AccountPages
                 //});
                 NavigationManager.NavigateTo("/", forceLoad: true);
             }
+        }
+
+        private void NavToRegisterPage()
+        {
+            NavigationManager.NavigateTo("/cadastro", forceLoad: true);
         }
     }
 }
