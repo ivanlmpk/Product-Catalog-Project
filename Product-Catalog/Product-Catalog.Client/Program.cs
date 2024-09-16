@@ -1,19 +1,23 @@
+using Blazored.LocalStorage;
+using ExternalServices.Helpers;
 using ExternalServices.Services.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
+builder.Services.AddAuthorizationCore();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<GetHttpClient>();
+builder.Services.AddScoped<LocalStorageService>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
-
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 //var configuration = builder.Configuration;
 //var authServiceBaseUrl = configuration["ExternalServices:AuthenticationServiceBaseUrl"];
 
-//// Registrar o serviço de autenticação com HttpClient e passando a configuração
-//builder.Services.AddScoped<IESAuthenticationService>(sp =>
-//    new ESAuthenticationService(sp.GetRequiredService<HttpClient>(), configuration));
 
 builder.Services.AddMudServices();
 

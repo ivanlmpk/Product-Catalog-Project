@@ -42,6 +42,7 @@ public class CustomAuthenticationStateProvider(LocalStorageService localStorageS
 
         return new CustomUserClaims(userId!.Value, name!.Value, email!.Value, role!.Value);
     }
+
     public static ClaimsPrincipal SetClaimPrincipal(CustomUserClaims claims)
     {
         if (claims.Email == null)

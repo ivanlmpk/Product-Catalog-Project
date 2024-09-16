@@ -24,11 +24,12 @@ builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
 // Cors para aceitar todos dominios
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("PermitirTudo", builder =>
+    options.AddPolicy("PermitirBlazorWasm", builder =>
     {
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("http://localhost:5039", "https://localhost:7057")
         .AllowAnyHeader()
-        .AllowAnyMethod();
+        .AllowAnyMethod()
+        .AllowCredentials();
     });
 });
 
@@ -41,7 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("PermitirTudo");
+app.UseCors("PermitirBlazorWasm");
 
 app.UseHttpsRedirection();
 
