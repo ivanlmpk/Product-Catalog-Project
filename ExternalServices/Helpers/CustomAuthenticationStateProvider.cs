@@ -1,16 +1,34 @@
 ﻿using _1_BaseDTOs.Session;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace ExternalServices.Helpers;
 
-public class CustomAuthenticationStateProvider(LocalStorageService localStorageService) : AuthenticationStateProvider
+public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 {
     private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
+    private readonly LocalStorageService _localStorageService;
+    private readonly IConfiguration _configuration;
+    private bool _isInitialized = false;
+
+    public CustomAuthenticationStateProvider(LocalStorageService localStorageService, IConfiguration configuration)
+    {
+        _localStorageService = localStorageService;
+        _configuration = configuration; 
+    }
+
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var stringToken = await localStorageService.GetToken();
+        var isClientRendered = _configuration.GetValue<bool>("ClientRendering:IsRendered");
+        if (!isClientRendered)
+        {
+            return await Task.FromResult(new AuthenticationState(anonymous));
+        }
+
+        var stringToken = await _localStorageService.GetToken();
         if (string.IsNullOrEmpty(stringToken))
             return await Task.FromResult(new AuthenticationState(anonymous));
 
@@ -65,13 +83,13 @@ public class CustomAuthenticationStateProvider(LocalStorageService localStorageS
         if (userSession.Token != null || userSession.RefreshToken != null)
         {
             var serializeSession = Serializations.SerializeObj(userSession);
-            await localStorageService.SetToken(serializeSession);
+            await _localStorageService.SetToken(serializeSession);
             var getUserClaims = DecryptToken(userSession.Token!);
             claimsPrincipal = SetClaimPrincipal(getUserClaims);
         }
         else
         {
-            await localStorageService.RemoveToken();
+            await _localStorageService.RemoveToken();
         }
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
     }

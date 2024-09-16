@@ -9,11 +9,10 @@ namespace ExternalServices.Services.Authentication;
 public class ESAuthenticationService(GetHttpClient getHttpClient) : IESAuthenticationService
 {
     //public readonly HttpClient _httpClient;
-    public string AuthUrl = "api/v1/authentication";
+    public const string AuthUrl = "api/v1/authentication";
 
-    public readonly string _baseUrL;
-    public readonly string _ApiVersion = "v1";
-    public readonly string _controller = "Authentication";
+    //public readonly string _ApiVersion = "v1";
+    //public readonly string _controller = "Authentication";
 
     //public ESAuthenticationService(HttpClient httpClient, IConfiguration configuration)
     //{

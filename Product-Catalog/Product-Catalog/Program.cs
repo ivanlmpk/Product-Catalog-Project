@@ -1,3 +1,7 @@
+using Blazored.LocalStorage;
+using ExternalServices.Helpers;
+using ExternalServices.Services.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 using Product_Catalog.Components;
 
@@ -5,6 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add MudBlazor services
 builder.Services.AddMudServices();
+
+builder.Services.AddHttpClient("SystemApiClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7079/");
+});
+
+//builder.Services.AddAuthorizationCore();
+builder.Services.AddAuthorization();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<GetHttpClient>();
+builder.Services.AddScoped<LocalStorageService>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
