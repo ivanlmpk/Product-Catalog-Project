@@ -11,6 +11,17 @@
         <MudSpacer />
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle" />
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+
+        <MudIconButton Icon="@Icons.Material.Filled.Person" Href="/" Color="Color.Inherit" Edge="Edge.End">
+            Login
+        </MudIconButton>
+        <MudIconButton Icon="@Icons.Material.Filled.AppRegistration" Href="/cadastro" Color="Color.Inherit" Edge="Edge.End">
+            Cadastro
+        </MudIconButton>
+        <MudIconButton Icon="@Icons.Material.Filled.Logout" Href="/" @onclick="LogoutClicked" Color="Color.Inherit" Edge="Edge.End">
+            Logout
+        </MudIconButton>
+
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
@@ -98,6 +109,15 @@
         true => Icons.Material.Rounded.WbSunny,
         false => Icons.Material.Outlined.DarkMode,
     };
+
+    private async Task LogoutClicked() 
+    {
+        var logoutModel = new UserSession();
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(logoutModel);
+
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
 }
 
 

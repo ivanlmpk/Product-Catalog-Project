@@ -1,14 +1,10 @@
 ﻿using _1_BaseDTOs.Login;
-using ExternalServices.Services.Authentication;
 using Microsoft.AspNetCore.Components;
 
 namespace Product_Catalog.Client.Pages.AccountPages
 {
     public partial class LoginPage
     {
-        [Inject] protected NavigationManager NavigationManager { get; set; }
-        [Inject] protected IESAuthenticationService AuthenticationService { get; set; }
-
         public Login UserLogin = new Login();
 
         private async Task HandleLogin()
@@ -23,7 +19,7 @@ namespace Product_Catalog.Client.Pages.AccountPages
                 //    Token = result.Token,
                 //    RefreshToken = result.RefreshToken
                 //});
-                NavigationManager.NavigateTo("/", forceLoad: true);
+                NavigationManager.NavigateTo("/home", forceLoad: true);
             }
         }
 
