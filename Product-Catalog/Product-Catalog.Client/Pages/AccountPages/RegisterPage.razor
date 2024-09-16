@@ -30,8 +30,29 @@
             </MudText>
         </MudCardActions>
     </MudCard>
-
 </MudContainer>
+
+<style>
+    .main-content {
+        display: flex;
+        justify-content: center;
+        margin-top: 8em !important;
+    }
+
+    .mud-paper {
+        min-width: 350px;
+        border-radius: 10px;
+    }
+
+    .mud-card-content {
+        padding: 25px !important;
+    }
+
+    .mud-card-actions {
+        justify-content: center;
+    }
+
+</style>
 
 @code {
     Register User = new Register();

@@ -1,5 +1,6 @@
 ﻿using _1_BaseDTOs.Session;
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,12 +13,14 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
     private readonly LocalStorageService _localStorageService;
     private readonly IConfiguration _configuration;
+    private readonly NavigationManager _navigationManager;
     private bool _isInitialized = false;
 
-    public CustomAuthenticationStateProvider(LocalStorageService localStorageService, IConfiguration configuration)
+    public CustomAuthenticationStateProvider(LocalStorageService localStorageService, IConfiguration configuration, NavigationManager navigationManager)
     {
         _localStorageService = localStorageService;
-        _configuration = configuration; 
+        _configuration = configuration;
+        _navigationManager = navigationManager;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()

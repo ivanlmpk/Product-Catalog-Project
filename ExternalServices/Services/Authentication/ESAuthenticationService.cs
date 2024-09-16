@@ -6,23 +6,12 @@ using System.Net.Http.Json;
 
 namespace ExternalServices.Services.Authentication;
 
-public class ESAuthenticationService(GetHttpClient getHttpClient) : IESAuthenticationService
+public class ESAuthenticationService(GetHttpClient? getHttpClient) : IESAuthenticationService
 {
-    //public readonly HttpClient _httpClient;
     public const string AuthUrl = "api/v1/authentication";
-
-    //public readonly string _ApiVersion = "v1";
-    //public readonly string _controller = "Authentication";
-
-    //public ESAuthenticationService(HttpClient httpClient, IConfiguration configuration)
-    //{
-    //    _httpClient = httpClient;
-    //    _baseUrl = configuration["ExternalServices:AuthenticationServiceBaseUrl"];
-    //}
 
     public async Task<LoginResponse> Login(Login userLogin)
     {
-        //var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/{_ApiVersion}/{_controller}/login", userLogin);
         var httpClient = getHttpClient.GetPublicHttpClient();
         var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", userLogin);
         if (!result.IsSuccessStatusCode)

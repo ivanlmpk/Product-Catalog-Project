@@ -9,16 +9,28 @@
             <MudText Typo="Typo.h5">Login</MudText>
         </MudCardHeader>
 
-        <MudCardContent>
-            <EditForm Model="UserLogin">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <MudTextField @bind-Value="UserLogin.Email" Label="Email" Required="true" />
-                <MudTextField InputType="InputType.Password" @bind-Value="UserLogin.Senha" Label="Senha" Required="true" />
+        <EditForm Enhance Model="UserLogin" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem>
+                <MudCard Style="background-color: rgba(1, 1, 1, 0);">
+                    <MudCardContent>
+                        <MudTextField Label="E-mail" 
+                            @bind-Value="UserLogin.Email" 
+                            For="@(() => UserLogin.Email)" />
+                        <MudTextField Label="Senha"
+                            id="passwordField"
+                            @bind-Value="UserLogin.Senha" 
+                            For="@(() => UserLogin.Senha)" />
+                    </MudCardContent>
 
-                <MudButton type="submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" FullWidth="true">Login</MudButton>
-            </EditForm>
-        </MudCardContent>
+                    <MudCardActions>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-1" FullWidth="true">Login</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>   
+        </EditForm>
 
         <MudCardActions Class="justify-center">
             <MudText Typo="Typo.caption" Class="text-center">
@@ -34,16 +46,24 @@
     .main-content {
         display: flex;
         justify-content: center;
+        margin-top: 8em !important;
     }
 
     .mud-paper {
-        margin-top: 15em;
         min-width: 350px;
         border-radius: 10px;
     }
 
     .mud-card-content {
         padding: 25px !important;
+    }
+
+    .mud-card-actions {
+        justify-content: center;
+    }
+
+    .mud-button {
+        width: 90% !important;
     }
 </style>
 

@@ -30,7 +30,5 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
 builder.Services.AddMudServices();
 
-//var configuration = builder.Configuration;
-//var authServiceBaseUrl = configuration["ExternalServices:AuthenticationServiceBaseUrl"];
 await builder.Build().RunAsync();
 

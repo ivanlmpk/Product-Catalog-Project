@@ -5,10 +5,10 @@
 
 <MudText Typo="Typo.h3" GutterBottom="true">
     Olá,
-    @* <AuthorizeView>
+    <AuthorizeView>
         <Authorized>@context.User.Identity!.Name!</Authorized>
         <NotAuthorized>Convidado!</NotAuthorized>
-    </AuthorizeView> *@
+    </AuthorizeView>
 
 </MudText>
 <MudText Class="mb-8">Welcome to your new app, powered by MudBlazor and the .NET 8 Template!</MudText>
