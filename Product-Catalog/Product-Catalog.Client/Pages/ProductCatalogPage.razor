@@ -6,7 +6,7 @@
 @inject ISnackbar Snackbar
 
 <PageTitle>Catálogo de Produtos X</PageTitle>
-<MudText Class="mb-8">Esta tabela exibe produtos do servidor.</MudText>
+<MudText Class="mt-3 mb-5" Typo="Typo.h5">Catálogo</MudText>
 
 <MudButton Color="Color.Primary" OnClick="OpenAddProductDialog">Adicionar</MudButton>
 <MudButton Color="Color.Primary" OnClick="OpenUpdateDialog">Atualizar</MudButton>
@@ -21,7 +21,7 @@ else
     <MudDataGrid T="ProductDTO" MultiSelection="true" Items="@_products" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
                  Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Periodic Elements</MudText>
+            <MudText Typo="Typo.h6">Produtos</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                           AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
