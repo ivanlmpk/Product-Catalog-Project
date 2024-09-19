@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using ExternalServices.Helpers;
 using ExternalServices.Services.Authentication;
+using ExternalServices.Services.Products;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 using Product_Catalog.Components;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<GetHttpClient>();
 builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
+builder.Services.AddScoped<IESProductService, ESProductService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

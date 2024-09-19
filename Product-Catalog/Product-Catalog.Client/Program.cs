@@ -1,11 +1,10 @@
 using Blazored.LocalStorage;
 using ExternalServices.Helpers;
 using ExternalServices.Services.Authentication;
+using ExternalServices.Services.Products;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using Product_Catalog.Client;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -14,8 +13,13 @@ builder.Services.AddHttpClient("SystemApiClient", client =>
     client.BaseAddress = new Uri("https://localhost:7079/");
 });
 
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
+// Adicionando um novo HttpClient para o novo microsserviço
+builder.Services.AddHttpClient("ProductServiceClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7135/"); // Substitua pela URL base do seu novo microsserviço
+});
 
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
 var configRender = builder.Configuration.GetSection("ClientRendering:IsRendered");
 if (configRender.Value == "False")
 {
@@ -28,6 +32,7 @@ builder.Services.AddScoped<GetHttpClient>();
 builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
+builder.Services.AddScoped<IESProductService, ESProductService>();
 builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();

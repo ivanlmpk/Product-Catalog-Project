@@ -1,0 +1,180 @@
+@page "/product-catalog-x"
+
+@using ExternalServices.Services.Products
+@using Product_Catalog.Client.Components
+@using _1_BaseDTOs.Product
+@inject ISnackbar Snackbar
+
+<PageTitle>Catálogo de Produtos X</PageTitle>
+<MudText Class="mb-8">Esta tabela exibe produtos do servidor.</MudText>
+
+<MudButton Color="Color.Primary" OnClick="OpenAddProductDialog">Adicionar</MudButton>
+<MudButton Color="Color.Primary" OnClick="OpenUpdateDialog">Atualizar</MudButton>
+<MudButton Color="Color.Primary" OnClick="DeleteProduct">Deletar</MudButton>
+
+@if (_products == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudDataGrid T="ProductDTO" MultiSelection="true" Items="@_products" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+                 Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Periodic Elements</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <Columns>
+            <SelectColumn T="ProductDTO" />
+            <PropertyColumn Property="x => x.Id" Title="Id" Sortable="false" Filterable="false" />
+            <PropertyColumn Property="x => x.Titulo" />
+            <PropertyColumn Property="x => x.Descricao" />
+            <PropertyColumn Property="x => x.Preco" SortBy="@_sortBy" />
+            <PropertyColumn Property="x => x.Data.ToShortDateString()" />
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="ProductDTO" />
+        </PagerContent>
+    </MudDataGrid>
+
+}
+
+@code {
+
+    private IEnumerable<ProductDTO> _products = new List<ProductDTO>();
+
+    private string? _searchString;
+
+    private bool _sortNameByLength;
+
+    private List<string> _events = new();
+
+    private ProductDTO _selectedItem = new();
+
+    // custom sort by name length
+    private Func<ProductDTO, object?> _sortBy => x =>
+    {
+        if (_sortNameByLength)
+            return x.Titulo!.Length;
+        else
+            return x.Titulo;
+    };
+
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<ProductDTO, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if ($"{x.Id}".Contains(_searchString))
+            return true;
+
+        if (x.Titulo!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Descricao!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if ($"{x.Preco}".Contains(_searchString))
+            return true;
+
+        if (x.Data.ToShortDateString().Contains(_searchString))
+            return true;
+
+        return false;
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate a loading indicator
+        await Task.Delay(500);
+
+        _products = await ProductService.GetAllAsync();
+
+    }
+
+    private async Task OpenAddProductDialog()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
+        var dialog = DialogService.Show<AddProductDialog>("Adicionar Produto", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // Atualizar a lista de produtos após adicionar um novo produto
+            _products = await ProductService.GetAllAsync();
+        }
+    }
+
+    private async Task OpenUpdateProductDialog(ProductDTO selectedProduct)
+    {
+        var parameters = new DialogParameters
+        {
+            { "Product", selectedProduct }
+        };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
+        var dialog = DialogService.Show<AddProductDialog>("Atualizar Produto", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // Atualizar a lista de produtos após adicionar um novo produto
+            await RefreshPage();
+        }
+    }
+
+    private async Task OpenUpdateDialog()
+    {
+        if (_selectedItem == null || _selectedItem.Id == 0)
+        {
+            Snackbar.Add("Selecione um produto para atualizar.", Severity.Warning);
+            return;
+        }
+
+        await OpenUpdateProductDialog(_selectedItem);
+    }
+
+    private async Task DeleteProduct()
+    {
+        if (_selectedItem == null || _selectedItem.Id == 0)
+        {
+            Snackbar.Add("Selecione um produto para deletar.", Severity.Warning);
+            return;
+        }
+
+        await ProductService.DeleteAsync(_selectedItem.Id);
+
+        Snackbar.Add("Produto excluído com sucesso.", Severity.Success);
+        await RefreshPage();
+    }
+
+    // events
+    void RowClicked(DataGridRowClickEventArgs<ProductDTO> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+
+        _selectedItem = args.Item;
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<ProductDTO> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<ProductDTO> items)
+    {
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+        _selectedItem = items.Any() ? items.First() : new ProductDTO();
+    }
+
+    async Task RefreshPage()
+    {
+        _products = await ProductService.GetAllAsync();
+        StateHasChanged();
+    }
+}
