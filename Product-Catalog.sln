@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1-BaseDTOs", "1-BaseDTOs\1-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalServices", "ExternalServices\ExternalServices.csproj", "{3BF660BD-964A-40A1-983C-482C91475651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.ProductService", "ProductService\Application.ProductService.csproj", "{F9650459-200E-406F-ABC1-0C0C6AA85A02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.ProductService", "ProductService\Application.ProductService.csproj", "{F9650459-200E-406F-ABC1-0C0C6AA85A02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.CategoryService", "CategoryService\Application.CategoryService.csproj", "{1F05C0B7-571B-4D70-BCC8-2FEE0E08048F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.CategoryService", "CategoryService\Application.CategoryService.csproj", "{1F05C0B7-571B-4D70-BCC8-2FEE0E08048F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
