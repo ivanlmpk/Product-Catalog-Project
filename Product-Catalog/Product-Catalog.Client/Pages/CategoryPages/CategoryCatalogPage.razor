@@ -3,7 +3,7 @@
 <PageTitle>Catálogo de Categorias X</PageTitle>
 <MudText Class="mt-3 mb-5" Typo="Typo.h5">Catálogo</MudText>
 
-<MudButton Color="Color.Primary" OnClick="OpenAddProductDialog">Adicionar</MudButton>
+<MudButton Color="Color.Primary" OnClick="OpenAddCategoryDialog">Adicionar</MudButton>
 <MudButton Color="Color.Primary" OnClick="OpenUpdateDialog">Atualizar</MudButton>
 <MudButton Color="Color.Primary" OnClick="DeleteProduct">Deletar</MudButton>
 
@@ -16,7 +16,7 @@ else
     <MudDataGrid T="CategoryDTO" MultiSelection="true" Items="@_categories" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
                  Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Produtos</MudText>
+            <MudText Typo="Typo.h6">Categorias</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                           AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -26,8 +26,6 @@ else
             <PropertyColumn Property="x => x.Id" Title="Id" Sortable="false" Filterable="false" />
             <PropertyColumn Property="x => x.Titulo" />
             <PropertyColumn Property="x => x.Descricao" />
-            <PropertyColumn Property="x => x.Preco" SortBy="@_sortBy" />
-            <PropertyColumn Property="x => x.Data.ToShortDateString()" />
         </Columns>
         <PagerContent>
             <MudDataGridPager T="CategoryDTO" />
@@ -72,9 +70,6 @@ else
         if (x.Descricao!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
-        if ($"{x.Preco}".Contains(_searchString))
-            return true;
-
         if (x.Data.ToShortDateString().Contains(_searchString))
             return true;
 
@@ -90,11 +85,11 @@ else
 
     }
 
-    private async Task OpenAddProductDialog()
+    private async Task OpenAddCategoryDialog()
     {
         var parameters = new DialogParameters();
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
-        var dialog = DialogService.Show<AddProductDialog>("Adicionar Produto", parameters, options);
+        var dialog = DialogService.Show<AddProductDialog>("Adicionar Categoria", parameters, options);
 
         var result = await dialog.Result;
 
@@ -105,14 +100,14 @@ else
         }
     }
 
-    private async Task OpenUpdateProductDialog(CategoryDTO selectedProduct)
+    private async Task OpenUpdateCategoryDialog(CategoryDTO selectedCategory)
     {
         var parameters = new DialogParameters
         {
-            { "Product", selectedProduct }
+            { "Category", selectedCategory }
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
-        var dialog = DialogService.Show<AddProductDialog>("Atualizar Produto", parameters, options);
+        var dialog = DialogService.Show<AddProductDialog>("Atualizar Categoria", parameters, options);
 
         var result = await dialog.Result;
 
@@ -127,24 +122,24 @@ else
     {
         if (_selectedItem == null || _selectedItem.Id == 0)
         {
-            Snackbar.Add("Selecione um produto para atualizar.", Severity.Warning);
+            Snackbar.Add("Selecione uma categoria para atualizar.", Severity.Warning);
             return;
         }
 
-        await OpenUpdateProductDialog(_selectedItem);
+        await OpenUpdateCategoryDialog(_selectedItem);
     }
 
     private async Task DeleteProduct()
     {
         if (_selectedItem == null || _selectedItem.Id == 0)
         {
-            Snackbar.Add("Selecione um produto para deletar.", Severity.Warning);
+            Snackbar.Add("Selecione uma categoria para deletar.", Severity.Warning);
             return;
         }
 
         await ProductService.DeleteAsync(_selectedItem.Id);
 
-        Snackbar.Add("Produto excluído com sucesso.", Severity.Success);
+        Snackbar.Add("categoria excluída com sucesso.", Severity.Success);
         await RefreshPage();
     }
 
