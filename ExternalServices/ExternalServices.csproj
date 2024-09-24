@@ -20,8 +20,4 @@
     <ProjectReference Include="..\1-BaseDTOs\1-BaseDTOs.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Categories\" />
-  </ItemGroup>
-
 </Project>
