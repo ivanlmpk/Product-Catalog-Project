@@ -1,5 +1,6 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using ExternalServices.Services.Categories
 @using ExternalServices.Services.Products
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -20,6 +21,7 @@
 @inject IJSRuntime JS
 @inject AuthenticationStateProvider AuthStateProvider 
 @inject IESAuthenticationService AuthenticationService
+@inject IESCategoryService CategoryService
 @inject IESProductService ProductService    
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
