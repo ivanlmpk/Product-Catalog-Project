@@ -19,6 +19,18 @@ builder.Services.AddDbContext<CategoryDbContext>(options =>
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
+// Cors para aceitar meus dominios
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirBlazorWasm3", builder =>
+    {
+        builder.WithOrigins("http://localhost:5039", "https://localhost:7057")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("PermitirBlazorWasm3");
 
 app.UseHttpsRedirection();
 

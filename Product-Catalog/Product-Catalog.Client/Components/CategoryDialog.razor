@@ -1,0 +1,33 @@
+﻿@using _1_BaseDTOs.Product
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField Label="Nome" @bind-Value="newCategory.Titulo" Required="true" />
+        <MudTextField Label="Descrição" @bind-Value="newCategory.Descricao" Required="true" />
+        <MudTextField Label="Preço" @bind-Value="newCategory.Preco" Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" OnClick="HandleValidSubmit">@buttonText</MudButton>
+        <MudButton Color="Color.Secondary" OnClick="Cancel">Cancelar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<style>
+    .mud-dialog {
+        min-width: 450px;
+        border-radius: 10px;
+    }
+
+    .mud-card-actions {
+        justify-content: space-between;
+    }
+
+    .mud-dialog .mud-dialog-actions {
+        padding-right: 1em;
+    }
+
+    .mud-card-content {
+        padding: 25px !important;
+    }
+</style>
+
