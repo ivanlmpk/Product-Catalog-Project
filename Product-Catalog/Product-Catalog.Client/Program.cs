@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using ExternalServices.Helpers;
 using ExternalServices.Services.Authentication;
+using ExternalServices.Services.Categories;
 using ExternalServices.Services.Products;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
 builder.Services.AddScoped<IESProductService, ESProductService>();
+builder.Services.AddScoped<IESCategoryService, ESCategoryService>();
 builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();

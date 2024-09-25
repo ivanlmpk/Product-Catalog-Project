@@ -11,7 +11,7 @@ public class ESCategoryService : IESCategoryService
 
     public ESCategoryService(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClientFactory.CreateClient("ProductServiceClient");
+        _httpClient = httpClientFactory.CreateClient("CategoryServiceBaseUrl");
     }
 
     public async Task<IEnumerable<CategoryDTO>> GetAllAsync()
@@ -86,7 +86,7 @@ public class ESCategoryService : IESCategoryService
     {
         if (_httpClient.BaseAddress == null)
         {
-            _httpClient.BaseAddress = new Uri("https://localhost:7135/");
+            _httpClient.BaseAddress = new Uri("https://localhost:7082/");
         }
     }
 }
