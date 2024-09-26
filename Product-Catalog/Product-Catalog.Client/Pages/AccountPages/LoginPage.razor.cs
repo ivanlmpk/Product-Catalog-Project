@@ -4,6 +4,7 @@ using ExternalServices.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
+using static MudBlazor.Defaults.Classes;
 
 namespace Product_Catalog.Client.Pages.AccountPages
 {
@@ -46,7 +47,9 @@ namespace Product_Catalog.Client.Pages.AccountPages
             else
             {
                 _validatingLoging = false;
-                Snackbar.Add($"{result.Message}", Severity.Error);
+
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+                Snackbar.Add($"{result.Message}", Severity.Warning);
             }
         }
 
