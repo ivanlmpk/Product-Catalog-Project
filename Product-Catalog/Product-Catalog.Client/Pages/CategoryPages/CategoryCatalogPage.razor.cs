@@ -95,7 +95,7 @@ public partial class CategoryCatalogPage
         await OpenUpdateCategoryDialog(_selectedItem);
     }
 
-    private async Task DeleteProduct()
+    private async Task DeleteCategory()
     {
         if (_selectedItem == null || _selectedItem.Id == 0)
         {
@@ -103,7 +103,7 @@ public partial class CategoryCatalogPage
             return;
         }
 
-        await ProductService.DeleteAsync(_selectedItem.Id);
+        await CategoryService.DeleteAsync(_selectedItem.Id);
 
         Snackbar.Add("categoria excluída com sucesso.", Severity.Success);
         await RefreshPage();
