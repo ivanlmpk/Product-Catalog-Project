@@ -55,7 +55,7 @@ public partial class CategoryCatalogPage
     {
         var parameters = new DialogParameters();
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
-        var dialog = DialogService.Show<AddProductDialog>("Adicionar Categoria", parameters, options);
+        var dialog = DialogService.Show<CategoryDialog>("Adicionar Categoria", parameters, options);
 
         var result = await dialog.Result;
 
@@ -73,7 +73,7 @@ public partial class CategoryCatalogPage
             { "Category", selectedCategory }
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
-        var dialog = DialogService.Show<AddProductDialog>("Atualizar Categoria", parameters, options);
+        var dialog = DialogService.Show<CategoryDialog>("Atualizar Categoria", parameters, options);
 
         var result = await dialog.Result;
 

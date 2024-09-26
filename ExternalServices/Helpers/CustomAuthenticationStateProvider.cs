@@ -83,6 +83,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     public async Task UpdateAuthenticationState(UserSession userSession)
     {
         var claimsPrincipal = new ClaimsPrincipal();
+
         if (userSession.Token != null || userSession.RefreshToken != null)
         {
             var serializeSession = Serializations.SerializeObj(userSession);
@@ -94,6 +95,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         {
             await _localStorageService.RemoveToken();
         }
+
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
     }
 }

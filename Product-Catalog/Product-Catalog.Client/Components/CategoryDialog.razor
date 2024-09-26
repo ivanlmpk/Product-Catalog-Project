@@ -4,7 +4,6 @@
     <DialogContent>
         <MudTextField Label="Nome" @bind-Value="newCategory.Titulo" Required="true" />
         <MudTextField Label="Descrição" @bind-Value="newCategory.Descricao" Required="true" />
-        <MudTextField Label="Preço" @bind-Value="newCategory.Preco" Required="true" />
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" OnClick="HandleValidSubmit">@buttonText</MudButton>
