@@ -15,4 +15,6 @@ public class ApplicationUser
     [Required]
     [StringLength(100)]
     public required string Senha { get; set; }
+    public string? Telefone { get; set; }
+    public string? Cidade { get; set; }
 }

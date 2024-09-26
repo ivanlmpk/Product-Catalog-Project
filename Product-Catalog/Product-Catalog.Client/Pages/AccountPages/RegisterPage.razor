@@ -19,7 +19,7 @@
                 <MudTextField InputType="InputType.Telephone" @bind-Value="User.Telefone" Label="Telefone" Required="true" />
                 <MudTextField @bind-Value="User.Cidade" Label="Cidade" Required="false" />
  
-                <MudButton type="submit" Variant="Variant.Filled" Color="Color.Secondary" Class="mt-4" FullWidth="true">Cadastrar</MudButton>
+                <MudButton type="submit" Variant="Variant.Filled" Color="@_registerButtonColor" Class="mt-4" FullWidth="true">Cadastrar</MudButton>
             </EditForm>
         </MudCardContent>
 
@@ -53,13 +53,3 @@
     }
 
 </style>
-
-@code {
-    Register User = new Register();
-
-    private Task HandleRegister()
-    {
-        // var result = await authenticationService.
-        return Task.CompletedTask;
-    }
-}

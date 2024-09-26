@@ -42,6 +42,8 @@ public class UserAccountRepository : IUserAccount
             Nome = userRegister.NomeCompleto,
             Email = userRegister.Email,
             Senha = BCrypt.Net.BCrypt.HashPassword(userRegister.Senha),
+            Telefone = userRegister.Telefone,
+            Cidade = userRegister.Cidade
         }).Entity;
 
         await _context.SaveChangesAsync();
