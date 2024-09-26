@@ -25,10 +25,8 @@ public class ESProductService : IESProductService
             throw new Exception("Erro ao obter a lista de produtos.");
 
         var products = await result.Content.ReadFromJsonAsync<IEnumerable<ProductDTO>>();
-        if (products == null || !products.Any())
-            throw new Exception("Nenhum produto encontrado.");
 
-        return products;
+        return products!;
     }
     public async Task<ProductDTO> GetByIdAsync(int id)
     {

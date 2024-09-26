@@ -8,7 +8,7 @@ public partial class RegisterPage
     Register User = new Register();
 
     private bool _isRegistering;
-    private Color _registerButtonColor => _isRegistering ? Color.Tertiary : Color.Surface;
+    private Color _registerButtonColor => _isRegistering ? Color.Dark : Color.Info;
 
     private async Task HandleRegister()
     {
@@ -25,7 +25,10 @@ public partial class RegisterPage
         }
         else
         {
-            Snackbar.Add($"Erro ao efetuar registro: {result.Message}");
+            _isRegistering = false;
+
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            Snackbar.Add($"Erro ao efetuar registro: {result.Message}", Severity.Warning);
         }
     }
 }

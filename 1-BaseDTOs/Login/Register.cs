@@ -13,7 +13,11 @@ public class Register : AccountBase
     [Compare(nameof(Senha))]
     public string? ComfirmarSenha { get; set; }
 
+    [Required(ErrorMessage = "O campo de telefone é obrigatório.")]
+    [MaxLength(16, ErrorMessage = "Número de telefone excedeu o limite.")]
     public string? Telefone { get; set; }
 
+    [Required(ErrorMessage = "O campo cidade é obrigatório.")]
+    [MaxLength(50)]
     public string? Cidade { get; set; }
 }

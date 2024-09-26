@@ -47,7 +47,10 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
         var claimsPrincipal = SetClaimPrincipal(getUserClaims);
 
-        _userSession.UserId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (isClientRendered && claimsPrincipal.Identity!.IsAuthenticated)
+        {
+            _userSession.UserId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        }
 
         return await Task.FromResult(new AuthenticationState(claimsPrincipal));
     }
