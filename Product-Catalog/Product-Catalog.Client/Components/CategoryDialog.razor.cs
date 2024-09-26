@@ -47,7 +47,7 @@ public partial class CategoryDialog
                 {
                     Titulo = newCategory.Titulo,
                     Descricao = newCategory.Descricao,
-                    UserId = Convert.ToInt32(_userId),
+                    UserId = Convert.ToInt32(UserSession.UserId),
                     Data = DateTime.Now
                 };
 

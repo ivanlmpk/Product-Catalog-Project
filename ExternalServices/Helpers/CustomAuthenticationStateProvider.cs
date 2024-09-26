@@ -14,13 +14,15 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     private readonly LocalStorageService _localStorageService;
     private readonly IConfiguration _configuration;
     private readonly NavigationManager _navigationManager;
+    private readonly UserSession _userSession;
     private bool _isInitialized = false;
 
-    public CustomAuthenticationStateProvider(LocalStorageService localStorageService, IConfiguration configuration, NavigationManager navigationManager)
+    public CustomAuthenticationStateProvider(LocalStorageService localStorageService, IConfiguration configuration, NavigationManager navigationManager, UserSession userSession)
     {
         _localStorageService = localStorageService;
         _configuration = configuration;
         _navigationManager = navigationManager;
+        _userSession = userSession;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -44,6 +46,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             return await Task.FromResult(new AuthenticationState(anonymous));
 
         var claimsPrincipal = SetClaimPrincipal(getUserClaims);
+
+        _userSession.UserId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         return await Task.FromResult(new AuthenticationState(claimsPrincipal));
     }

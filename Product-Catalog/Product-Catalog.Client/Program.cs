@@ -1,3 +1,4 @@
+using _1_BaseDTOs.Session;
 using Blazored.LocalStorage;
 using ExternalServices.Helpers;
 using ExternalServices.Services.Authentication;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddScoped<IESAuthenticationService, ESAuthenticationService>();
 builder.Services.AddScoped<IESProductService, ESProductService>();
 builder.Services.AddScoped<IESCategoryService, ESCategoryService>();
+builder.Services.AddSingleton<UserSession>();
 builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();
