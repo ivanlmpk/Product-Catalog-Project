@@ -15,7 +15,7 @@ public class ESAuthenticationService(GetHttpClient? getHttpClient) : IESAuthenti
         var httpClient = getHttpClient.GetPublicHttpClient();
         var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", userLogin);
         if (!result.IsSuccessStatusCode)
-            return new LoginResponse(false, "Erro ao logar.");
+            return new LoginResponse(false, "E-mail ou senha inválidos.");
 
         return await result.Content.ReadFromJsonAsync<LoginResponse>()!;
     }

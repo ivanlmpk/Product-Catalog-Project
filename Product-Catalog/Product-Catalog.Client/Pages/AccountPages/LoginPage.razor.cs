@@ -3,6 +3,7 @@ using _1_BaseDTOs.Session;
 using ExternalServices.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 
 namespace Product_Catalog.Client.Pages.AccountPages
 {
@@ -10,7 +11,8 @@ namespace Product_Catalog.Client.Pages.AccountPages
     {
         Login UserLogin = new Login();
         bool success;
-
+        private bool _validatingLoging;
+        private Color _loginButtonColor => _validatingLoging ? Color.Dark : Color.Primary;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -23,9 +25,12 @@ namespace Product_Catalog.Client.Pages.AccountPages
         private async Task HandleLogin()
         {
             success = true;
+            _validatingLoging = true;
             StateHasChanged();
 
             var result = await AuthenticationService.Login(UserLogin);
+
+            await Task.Delay(3000);
 
             if (result.Flag)
             {
@@ -35,7 +40,13 @@ namespace Product_Catalog.Client.Pages.AccountPages
                     Token = result.Token,
                     RefreshToken = result.RefreshToken
                 });
+                _validatingLoging = false;
                 NavigationManager.NavigateTo("/home", forceLoad: true);
+            } 
+            else
+            {
+                _validatingLoging = false;
+                Snackbar.Add($"{result.Message}", Severity.Error);
             }
         }
 

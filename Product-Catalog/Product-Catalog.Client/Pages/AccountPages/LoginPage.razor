@@ -25,7 +25,16 @@
                     </MudCardContent>
 
                     <MudCardActions>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-1" FullWidth="true">Login</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="@_loginButtonColor" Class="mt-1" FullWidth="true">
+                            @if (_validatingLoging)
+                            {
+                                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                            } 
+                            else
+                            {
+                                <MudText>Login</MudText>
+                            }
+                        </MudButton>
                     </MudCardActions>
                 </MudCard>
             </MudItem>
