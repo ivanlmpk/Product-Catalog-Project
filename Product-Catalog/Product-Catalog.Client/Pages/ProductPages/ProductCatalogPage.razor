@@ -18,7 +18,7 @@
 }
 else
 {
-    <MudDataGrid T="ProductDTO" MultiSelection="true" Items="@_products" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+    <MudDataGrid T="ProductDTO" Class="data-grid-catalog" Loading="@_isLoading" MultiSelection=" true" Items="@_products" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
                  Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Produtos</MudText>
@@ -34,16 +34,20 @@ else
             <PropertyColumn Property="x => x.Preco" SortBy="@_sortBy" />
             <PropertyColumn Property="x => x.Data.ToShortDateString()" />
         </Columns>
+
+        <LoadingContent>
+            @for (int i = 0; i < 9; i++)
+            {
+                <MudSkeleton Height="50px" Animation="Animation.Wave"/> 
+            } 
+        </LoadingContent>
+
+        <NoRecordsContent>
+            <MudText id="zero-products-message" Typo="Typo.h5" Class="mt-5 mb-5 ml-5">Nenhuma produto cadastrado.</MudText>
+        </NoRecordsContent>
+
         <PagerContent>
-            @if (!_products.Any())
-            {
-                <MudText id="zero-products-message" Typo="Typo.h5" Class="mt-5 mb-5 ml-5">Nenhum produto cadastrado.</MudText>
-                <MudDataGridPager T="ProductDTO" />
-            }
-            else
-            {
-                <MudDataGridPager T="ProductDTO" />
-            }
+            <MudDataGridPager T="ProductDTO" />
         </PagerContent>
     </MudDataGrid>
 }
@@ -55,6 +59,8 @@ else
     private string? _searchString;
 
     private bool _sortNameByLength;
+
+    private bool _isLoading;
 
     private List<string> _events = new();
 
@@ -95,11 +101,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate a loading indicator
-        await Task.Delay(500);
+        _isLoading = true;
 
+        await Task.Delay(5000);
         _products = await ProductService.GetAllAsync();
 
+        _isLoading = false;
     }
 
     private async Task OpenAddProductDialog()

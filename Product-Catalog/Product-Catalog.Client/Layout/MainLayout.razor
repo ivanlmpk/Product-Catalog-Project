@@ -40,7 +40,7 @@
 
 @code {
     private bool _drawerOpen = true;
-    private bool _isDarkMode = true;
+    public bool IsDarkMode = true;
     private MudTheme? _theme = null;
 
     protected override void OnInitialized()
@@ -62,7 +62,7 @@
 
     private void DarkModeToggle()
     {
-        _isDarkMode = !_isDarkMode;
+        IsDarkMode = !IsDarkMode;
     }
 
     private readonly PaletteLight _lightPalette = new()
@@ -104,10 +104,16 @@
         OverlayLight = "#1e1e2d80",
     };
 
-    public string DarkLightModeButtonIcon => _isDarkMode switch
+    public string DarkLightModeButtonIcon => IsDarkMode switch
     {
         true => Icons.Material.Rounded.WbSunny,
         false => Icons.Material.Outlined.DarkMode,
+    };
+
+    public string SkeletonLineCss => IsDarkMode switch
+    {
+        true => "rgba(198, 197, 209, 0.11)",
+        false => "rgba(0, 0, 0, 0.11)"
     };
 
     private async Task LogoutClicked() 

@@ -12,6 +12,8 @@ public partial class CategoryCatalogPage
 
     private bool _sortNameByLength;
 
+    private bool _isLoading;
+
     private List<string> _events = new();
 
     private CategoryDTO _selectedItem = new();
@@ -48,7 +50,12 @@ public partial class CategoryCatalogPage
 
     protected override async Task OnInitializedAsync()
     {
+        _isLoading = true;
+
+        await Task.Delay(4000);
         _categories = await CategoryService.GetAllAsync();
+
+        _isLoading = false;
     }
 
     private async Task OpenAddCategoryDialog()

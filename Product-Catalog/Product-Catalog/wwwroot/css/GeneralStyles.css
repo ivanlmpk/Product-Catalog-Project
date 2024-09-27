@@ -1,9 +1,15 @@
 ﻿#zero-products-message {
-    height: 50vh !important;
+    margin-top: 0;
 }
 
-/*.mud-table-body {
-    height: 50vh !important;
+.data-grid-catalog {
+    min-height: 75vh !important;
+    display: flex;
+    flex-direction: column;
 }
-*/
+
+.mud-table-pagination {
+    margin-top: auto;
+}
+
 
