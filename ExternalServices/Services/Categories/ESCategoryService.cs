@@ -1,5 +1,4 @@
 ﻿using _1_BaseDTOs.Category;
-using _1_BaseDTOs.Product;
 using System.Net.Http.Json;
 
 namespace ExternalServices.Services.Categories;
@@ -23,10 +22,8 @@ public class ESCategoryService : IESCategoryService
             throw new Exception("Erro ao obter a lista de categorias.");
 
         var categories = await result.Content.ReadFromJsonAsync<IEnumerable<CategoryDTO>>();
-        if (categories == null || !categories.Any())
-            throw new Exception("Nenhuma categoria encontrada.");
 
-        return categories;
+        return categories!;
     }
     public async Task<CategoryDTO> GetByIdAsync(int id)
     {

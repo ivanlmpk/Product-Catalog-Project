@@ -35,10 +35,17 @@ else
             <PropertyColumn Property="x => x.Data.ToShortDateString()" />
         </Columns>
         <PagerContent>
-            <MudDataGridPager T="ProductDTO" />
+            @if (!_products.Any())
+            {
+                <MudText id="zero-products-message" Typo="Typo.h5" Class="mt-5 mb-5 ml-5">Nenhum produto cadastrado.</MudText>
+                <MudDataGridPager T="ProductDTO" />
+            }
+            else
+            {
+                <MudDataGridPager T="ProductDTO" />
+            }
         </PagerContent>
     </MudDataGrid>
-
 }
 
 @code {

@@ -22,9 +22,6 @@ namespace Application.CategoryService.API.Controllers
             {
                 var categories = await _categoryService.GetAllAsync();
 
-                if (!categories.Any())
-                    return Ok("Ainda não foi registrada nenhuma categoria ao banco de dados.");
-
                 return Ok(categories);
             }
             catch (Exception ex)
