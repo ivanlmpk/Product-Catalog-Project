@@ -38,7 +38,8 @@ else
         <LoadingContent>
             @for (int i = 0; i < 9; i++)
             {
-                <MudSkeleton Height="50px" Animation="Animation.Wave"/> 
+                @* <MudSkeleton Height="50px" Animation="Animation.Wave"/>  *@
+                <CustomSkeletonLine />
             } 
         </LoadingContent>
 

@@ -1,0 +1,12 @@
+﻿
+<div class="custom-skeleton-line">
+    <MudSkeleton Style="@SkeletonLineCss" Height="50px" Animation="Animation.Wave" />
+</div>
+
+@code {
+    public string SkeletonLineCss => UserSession.IsDarkMode switch
+    {
+        true => "background-color: rgba(198, 197, 209, 0.11)",
+        false => "background-color: rgba(0, 0, 0, 0.11)"
+    };
+}
