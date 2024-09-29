@@ -8,6 +8,8 @@ public partial class CategoryCatalogPage
 {
     private IEnumerable<CategoryDTO> _categories = new List<CategoryDTO>();
 
+    private int _userSessionId => Convert.ToInt32(UserSession.UserId);
+
     private string? _searchString;
 
     private bool _sortNameByLength;
@@ -52,8 +54,10 @@ public partial class CategoryCatalogPage
     {
         _isLoading = true;
 
-        await Task.Delay(4000);
-        _categories = await CategoryService.GetAllAsync();
+        await Task.Delay(3000);
+        var result = await CategoryService.GetAllAsync();
+        var categoriesByUser = result.Where(categories => categories.UserId == _userSessionId);
+        _categories = categoriesByUser;
 
         _isLoading = false;
     }

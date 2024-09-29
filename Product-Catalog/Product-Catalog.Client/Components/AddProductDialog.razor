@@ -5,6 +5,18 @@
         <MudTextField Label="Nome" @bind-Value="newProduct.Titulo" Required="true" />
         <MudTextField Label="Descrição" @bind-Value="newProduct.Descricao" Required="true" />
         <MudTextField Label="Preço" @bind-Value="newProduct.Preco" Required="true" />
+        <MudAutocomplete 
+            @bind-Value="_category"
+            SearchFunc="Search"
+            Variant="Variant.Text"
+            Label="@_comboBoxLabel"
+            Margin="_margin"
+            Dense="_dense"
+            Disabled="_disabled"
+            ReadOnly="_readonly"
+            Placeholder="@(_placeholder ? "Placeholder" : null)"
+            Clearable="_clearable">
+        </MudAutocomplete>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" OnClick="HandleValidSubmit">@buttonText</MudButton>
@@ -18,6 +30,10 @@
         border-radius: 10px;
     }
 
+    .mud-dialog .mud-dialog-content {
+        overflow: hidden !important;
+    }
+
     .mud-card-actions {
         justify-content: space-between;
     }
@@ -29,67 +45,9 @@
     .mud-card-content {
         padding: 25px !important;
     }
+
+    .mud-dialog-title {
+        padding-bottom: 0px !important;
+    }
+
 </style>
-
-@code {
-    private ProductDTO newProduct = new ProductDTO();
-    [Parameter]
-    public ProductDTO? Product { get; set; } // Recebe o produto selecionado do diálogo
-
-    [CascadingParameter]
-    private MudDialogInstance? MudDialog { get; set; }
-
-    private string buttonText => Product?.Id != 0 && Product != null ? "Atualizar" : "Adicionar";
-
-    protected override async Task OnInitializedAsync()
-    {
-        if(Product?.Id != 0 && Product != null)
-        {
-            newProduct = await ProductService.GetByIdAsync(Product.Id);
-        } 
-        else
-        {
-            newProduct = new ProductDTO();
-        }
-    }
-
-    private async Task HandleValidSubmit()
-    {
-        try
-        {
-            if (newProduct.Id == 0)
-            {
-                var produtoNovo = new ProductDTO
-                {
-                    Titulo = newProduct.Titulo,
-                    Descricao = newProduct.Descricao,
-                    Preco = newProduct.Preco,
-                    UserId = Convert.ToInt32(UserSession.UserId),
-                    Data = DateTime.Now
-                };
-
-                await ProductService.CreateAsync(produtoNovo);
-                Snackbar.Add("Produto adicionado com sucesso.", Severity.Success);
-
-                MudDialog.Close(DialogResult.Ok(true));
-            } 
-            else
-            {
-                await ProductService.UpdateAsync(newProduct);
-                Snackbar.Add("Produto atualizado com sucesso.", Severity.Success);
-
-                MudDialog.Close(DialogResult.Ok(true));
-            }
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add("Erro ao adicionar produto.", Severity.Warning);
-            Console.WriteLine($"Erro ao adicionar produto: {ex.Message}");
-        }
-    }
-
-    private void Cancel()
-    {
-        MudDialog.Close(DialogResult.Cancel());
-    }
-}

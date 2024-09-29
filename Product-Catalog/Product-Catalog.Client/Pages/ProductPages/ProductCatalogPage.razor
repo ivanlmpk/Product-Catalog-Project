@@ -38,13 +38,12 @@ else
         <LoadingContent>
             @for (int i = 0; i < 9; i++)
             {
-                @* <MudSkeleton Height="50px" Animation="Animation.Wave"/>  *@
                 <CustomSkeletonLine />
             } 
         </LoadingContent>
 
         <NoRecordsContent>
-            <MudText id="zero-products-message" Typo="Typo.h5" Class="mt-5 mb-5 ml-5">Nenhuma produto cadastrado.</MudText>
+            <MudText id="zero-products-message" Typo="Typo.h5" Class="mt-5 mb-5 ml-5">Nenhum produto cadastrado</MudText>
         </NoRecordsContent>
 
         <PagerContent>
@@ -56,6 +55,8 @@ else
 @code {
 
     private IEnumerable<ProductDTO> _products = new List<ProductDTO>();
+
+    private int _userSessionId => Convert.ToInt32(UserSession.UserId);
 
     private string? _searchString;
 
@@ -104,8 +105,10 @@ else
     {
         _isLoading = true;
 
-        await Task.Delay(5000);
-        _products = await ProductService.GetAllAsync();
+        await Task.Delay(3000);
+        var result = await ProductService.GetAllAsync();
+        var productsByUser = result.Where(products => products.UserId == _userSessionId);
+        _products = productsByUser;
 
         _isLoading = false;
     }
