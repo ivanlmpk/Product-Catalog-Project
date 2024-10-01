@@ -21,6 +21,7 @@ public partial class AddProductDialog
     private IEnumerable<CategoryDTO> _categories = new List<CategoryDTO>();
     private string _comboBoxLabel = "Categorias";
     private string? _category;
+    private CategoryDTO _category2 = new();
     Margin _margin;
     bool _dense;
     bool _disabled;
@@ -44,6 +45,12 @@ public partial class AddProductDialog
     {
         try
         {
+            if (await ProductAlreadyExists())
+            {
+                Snackbar.Add("Já existe um produto com esse nome.", Severity.Error);
+                return;
+            }
+
             if (newProduct.Id == 0)
             {
                 var produtoNovo = new ProductDTO
@@ -96,5 +103,10 @@ public partial class AddProductDialog
         var category = _categories.Where(x => x.Titulo == categoryName).First();
 
         return category.Id;
+    }
+
+    private Task<bool> ProductAlreadyExists()
+    {
+        return ProductService.CheckIfExists(newProduct.Titulo!);
     }
 }

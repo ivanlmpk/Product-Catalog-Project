@@ -33,7 +33,22 @@ namespace Application.ProductService.API.Controllers
             }
             catch (ArgumentException ex)
             {
-                return NotFound($"Produto não encontrado. Error message: {ex.Message}");
+                return NotFound($"Produto não encontrado. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{name}", Name = "check-if-exists")]
+        public async Task<bool> CheckIfExists(string name)
+        {
+            try
+            {
+                var result = await _productService.CheckIfExists(name);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: {ex.Message}");
             }
         }
 

@@ -2,6 +2,7 @@
 using _1_BaseDTOs.Responses;
 using ExternalServices.Helpers;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 using static System.Net.WebRequestMethods;
 
 namespace ExternalServices.Services.Products;
@@ -41,6 +42,19 @@ public class ESProductService : IESProductService
             throw new Exception("Não foi encontrado um produto para esse Id.");
 
         return product;
+    }
+
+    public async Task<bool> CheckIfExists(string name)
+    {
+        CheckBaseAdress();
+        var result = await _httpClient.GetAsync($"{_authUrl}/{name}");
+
+        if (!result.IsSuccessStatusCode)
+            throw new Exception("Erro ao checar produto.");
+
+        var productChecked = await result.Content.ReadFromJsonAsync<bool>();
+
+        return productChecked;  
     }
 
     public async Task<ProductDTO> CreateAsync(ProductDTO product)

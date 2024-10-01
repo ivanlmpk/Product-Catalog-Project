@@ -1,28 +1,33 @@
 ﻿@using _1_BaseDTOs.Product
 
-<MudDialog>
-    <DialogContent>
-        <MudTextField Label="Nome" @bind-Value="newProduct.Titulo" Required="true" />
-        <MudTextField Label="Descrição" @bind-Value="newProduct.Descricao" Required="true" />
-        <MudTextField Label="Preço" @bind-Value="newProduct.Preco" Required="true" />
-        <MudAutocomplete 
-            @bind-Value="_category"
-            SearchFunc="Search"
-            Variant="Variant.Text"
-            Label="@_comboBoxLabel"
-            Margin="_margin"
-            Dense="_dense"
-            Disabled="_disabled"
-            ReadOnly="_readonly"
-            Placeholder="@(_placeholder ? "Placeholder" : null)"
-            Clearable="_clearable">
-        </MudAutocomplete>
-    </DialogContent>
-    <DialogActions>
-        <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" OnClick="HandleValidSubmit">@buttonText</MudButton>
-        <MudButton Color="Color.Secondary" OnClick="Cancel">Cancelar</MudButton>
-    </DialogActions>
-</MudDialog>
+<EditForm Model="newProduct" OnValidSubmit="HandleValidSubmit">
+    <MudDialog>
+        <DialogContent>
+            <DataAnnotationsValidator />
+            <MudTextField Label="Nome" @bind-Value="newProduct.Titulo" For="@(() => newProduct.Titulo)" />
+            <MudTextField Label="Descrição" @bind-Value="newProduct.Descricao" For="@(() => newProduct.Descricao)" />
+            <MudTextField Label="Preço" @bind-Value="newProduct.Preco" For="@(() => newProduct.Preco)" />
+            <MudAutocomplete 
+                @bind-Value="_category"
+                SearchFunc="Search"
+                Variant="Variant.Text"
+                Label="@_comboBoxLabel"
+                Margin="_margin"
+                Dense="_dense"
+                Disabled="_disabled"
+                ReadOnly="_readonly"
+                Placeholder="@(_placeholder ? "Placeholder" : null)"
+                Clearable="_clearable"
+                Required="true">
+            </MudAutocomplete>
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">@buttonText</MudButton>
+            <MudButton Color="Color.Secondary" OnClick="Cancel">Cancelar</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
 
 <style>
     .mud-dialog {

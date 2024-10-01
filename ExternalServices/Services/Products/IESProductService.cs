@@ -6,6 +6,7 @@ public interface IESProductService
 {
     Task<IEnumerable<ProductDTO>> GetAllAsync();
     Task<ProductDTO> GetByIdAsync(int id);
+    Task<bool> CheckIfExists(string name);
     Task<ProductDTO> CreateAsync(ProductDTO product);
     Task<ProductDTO> UpdateAsync(ProductDTO product);
     Task<bool> DeleteAsync(int id);

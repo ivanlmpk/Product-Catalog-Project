@@ -20,7 +20,6 @@ public partial class CategoryCatalogPage
 
     private CategoryDTO _selectedItem = new();
 
-    // custom sort by name length
     private Func<CategoryDTO, object?> _sortBy => x =>
     {
         if (_sortNameByLength)
@@ -29,7 +28,6 @@ public partial class CategoryCatalogPage
             return x.Titulo;
     };
 
-    // quick filter - filter globally across multiple columns with the same input
     private Func<CategoryDTO, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
@@ -56,6 +54,7 @@ public partial class CategoryCatalogPage
 
         await Task.Delay(3000);
         var result = await CategoryService.GetAllAsync();
+        //TODO: Criar end-point para pegar os produtos por Usuario
         var categoriesByUser = result.Where(categories => categories.UserId == _userSessionId);
         _categories = categoriesByUser;
 

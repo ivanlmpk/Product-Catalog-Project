@@ -35,6 +35,16 @@ public class ProductService : IProductService
         return product;
     }
 
+    public async Task<bool> CheckIfExists(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentException("Nome inválido.");
+
+        var result = await _context.Products.AnyAsync(p => p.Titulo == name);
+
+        return result;
+    }
+
     public async Task<IEnumerable<Product>> GetAllAsync()
     {
         return await _context.Products.ToListAsync();
