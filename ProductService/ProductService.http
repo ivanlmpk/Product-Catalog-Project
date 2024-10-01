@@ -1,6 +1,9 @@
 @ProductService_HostAddress = http://localhost:5288
 
-GET {{ProductService_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{ProductService_HostAddress}}/api/v1/product/get-all
+
+###
+
+GET {{ProductService_HostAddress}}/api/v1/product/get-all-nocache
 
 ###

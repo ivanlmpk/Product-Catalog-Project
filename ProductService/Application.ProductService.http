@@ -1,0 +1,7 @@
+﻿@Application.ProductService_HostAddress = https://localhost:7135
+
+GET {{Application.ProductService_HostAddress}}/api/v1/product/get-all-nocache
+
+###
+
+GET {{Application.ProductService_HostAddress}}/api/v1/product/get-all

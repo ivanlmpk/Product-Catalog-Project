@@ -8,9 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "APIProduto",
+        Description = "API para armazenar os produtos do catálogo.",
+        Version = "v1"
+    })
+);
 builder.Services.AddDbContext<ProductDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Database") ??
@@ -29,6 +35,12 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowCredentials();
     });
+});
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379"; 
+    options.InstanceName = "RedisInstance";
 });
 
 var app = builder.Build();

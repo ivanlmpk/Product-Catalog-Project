@@ -1,6 +1,9 @@
-﻿using Application.ProductService.Application.Interfaces;
+﻿using _1_BaseDTOs.Product;
+using Application.ProductService.Application.Interfaces;
 using Application.ProductService.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace Application.ProductService.API.Controllers
 {
@@ -9,17 +12,49 @@ namespace Application.ProductService.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IDistributedCache _cache;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IDistributedCache cache)
         {
             _productService = productService;
+            _cache = cache; 
         }
 
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _productService.GetAllAsync();
+            string cacheKey = "all_products";
+            string serializedProducts;
+            var cachedProducts = await _cache.GetStringAsync(cacheKey);
 
+            if (!string.IsNullOrEmpty(cachedProducts))
+            {
+                // Se os dados estão no cache, desserializa e retorna
+                var products = JsonConvert.DeserializeObject<List<ProductDTO>>(cachedProducts);
+                return Ok(products);
+            }
+            else
+            {
+                // Se não está no cache, obtém do serviço
+                var products = await _productService.GetAllAsync();
+
+                // Serializa os dados e armazena no cache
+                serializedProducts = JsonConvert.SerializeObject(products);
+
+                // Define as opções de cache, como tempo de expiração
+                var options = new DistributedCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+
+                await _cache.SetStringAsync(cacheKey, serializedProducts, options);
+
+                return Ok(products);
+            }
+        }
+
+        [HttpGet("get-all-nocache")]
+        public async Task<IActionResult> GetAllNoCache()
+        {
+            var products = await _productService.GetAllAsync();
             return Ok(products);
         }
 

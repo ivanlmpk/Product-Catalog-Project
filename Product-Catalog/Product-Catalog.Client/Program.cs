@@ -39,5 +39,11 @@ builder.Services.AddScoped<IESCategoryService, ESCategoryService>();
 builder.Services.AddSingleton<UserSession>();
 builder.Services.AddMudServices();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379"; 
+    options.InstanceName = "SampleInstance";
+});
+
 await builder.Build().RunAsync();
 

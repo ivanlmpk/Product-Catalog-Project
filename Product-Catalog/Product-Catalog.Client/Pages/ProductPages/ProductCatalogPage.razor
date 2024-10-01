@@ -83,29 +83,32 @@ else
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
 
-        if ($"{x.Id}".Contains(_searchString))
-            return true;
+        return Task.Run(() =>
+        {
+            if ($"{x.Id}".Contains(_searchString))
+                return true;
 
-        if (x.Titulo!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+            if (x.Titulo!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
 
-        if (x.Descricao!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+            if (x.Descricao!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
 
-        if ($"{x.Preco}".Contains(_searchString))
-            return true;
+            if ($"{x.Preco}".Contains(_searchString))
+                return true;
 
-        if (x.Data.ToShortDateString().Contains(_searchString))
-            return true;
+            if (x.Data.ToShortDateString().Contains(_searchString))
+                return true;
 
-        return false;
+            return false;
+        }).GetAwaiter().GetResult();
     };
 
     protected override async Task OnInitializedAsync()
     {
         _isLoading = true;
 
-        await Task.Delay(3000);
+        // await Task.Delay(3000);
         var result = await ProductService.GetAllAsync();
         var productsByUser = result.Where(products => products.UserId == _userSessionId);
         _products = productsByUser;
